@@ -1,0 +1,2 @@
+bundles:
+  - { name: Swoop\Bundle\AssetBundle\AssetBundle, priority: 1000 }

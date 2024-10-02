@@ -1,0 +1,13 @@
+services:
+  swoop_option.registrator.non_site_option:
+    class: 'Swoop\Bundle\OptionBundle\Registrator\Chain\Element\NonSiteOptionsRegistratorChainElement'
+    calls:
+      - ['setSuccessor', ['@swoop_option.registrator.site_option']]
+
+  swoop_option.registrator.site_option:
+    class: 'Swoop\Bundle\OptionBundle\Registrator\Chain\Element\SiteOptionsRegistratorChainElement'
+
+  swoop_option.registrator.main:
+    public: true
+    parent: swoop_option.registrator.non_site_option
+

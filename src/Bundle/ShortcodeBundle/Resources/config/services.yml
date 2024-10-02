@@ -1,0 +1,4 @@
+services:
+    swoop_shortcode.registrator.shortcodes:
+        class: 'Swoop\Bundle\ShortcodeBundle\Registrator\ShortcodesRegistrator'
+        public: true

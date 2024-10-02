@@ -1,0 +1,55 @@
+services:
+  swoop_cron.checker.cron_command.chain.element.base:
+    class: 'Swoop\Bundle\CronBundle\Checker\CronCommand\Chain\Element\BaseCronCommandCheckerChainElement'
+    calls:
+      - [ 'setSuccessor', [ '@swoop_cron.checker.cron_command.chain.element.recurrence' ] ]
+
+  swoop_cron.checker.cron_command.chain.element.recurrence:
+    class: 'Swoop\Bundle\CronBundle\Checker\CronCommand\Chain\Element\RecurrenceCronCommandCheckerChainElement'
+
+  swoop_cron.checker.cron_command:
+    parent: swoop_cron.checker.cron_command.chain.element.base
+
+  swoop_cron.checker.cron_schedule.chain.element.base:
+    class: 'Swoop\Bundle\CronBundle\Checker\CronSchedule\Chain\Element\BaseCronScheduleCheckerChainElement'
+
+  swoop_cron.checker.cron_schedule:
+    parent: swoop_cron.checker.cron_schedule.chain.element.base
+
+  swoop_cron.hook.cron_schedules_registration:
+    class: 'Swoop\Bundle\CronBundle\Hooks\CronSchedulesRegistrationHook'
+    arguments:
+      - tag: 'cron_schedules'
+    calls:
+      - [ 'setChecker', [ '@swoop_cron.checker.cron_schedule' ] ]
+    tags:
+      - { name: swoop_hook }
+
+  swoop_cron.registry.cron_commands:
+    class: 'Swoop\Bundle\CronBundle\Registry\CronCommandsRegistry'
+    public: true
+    arguments:
+      - '@swoop_cron.checker.cron_command'
+
+  swoop_cron.scheduler.cron_commands.chain.element.single:
+    class: 'Swoop\Bundle\CronBundle\Scheduler\Chain\Element\CronSingleCommandsSchedulerChainElement'
+    arguments:
+      - '@service_container'
+      - '@swoop_hook.registry.hooks'
+    calls:
+      - [ 'setSuccessor', [ '@swoop_cron.scheduler.cron_commands.chain.element.recurrence' ] ]
+
+  swoop_cron.scheduler.cron_commands.chain.element.recurrence:
+    class: 'Swoop\Bundle\CronBundle\Scheduler\Chain\Element\CronRecurrentCommandsSchedulerChainElement'
+    arguments:
+      - '@service_container'
+      - '@swoop_hook.registry.hooks'
+
+  swoop_cron.scheduler.cron_commands:
+    parent: swoop_cron.scheduler.cron_commands.chain.element.single
+    public: true
+
+  swoop_cron.command.test:
+    class: 'Swoop\Bundle\CronBundle\Model\TestCronCommand'
+    tags:
+      - { name: swoop_cron_command }

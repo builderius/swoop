@@ -1,0 +1,30 @@
+{
+  "name": "builderius\/swoop",
+  "description": "OOP based platform for Wordpress plugins creation",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Swoop\\Bundle\\": "src/Bundle/"
+    }
+  },
+  "require": {
+    "symfony/config": "5.4.*",
+    "symfony/event-dispatcher": "5.4.*",
+    "symfony/finder": "5.4.*",
+    "symfony/filesystem": "5.4.*",
+    "symfony/dependency-injection": "5.4.*",
+    "symfony/proxy-manager-bridge": "5.4.*",
+    "symfony/yaml": "5.4.*",
+    "symfony/templating": "5.4.*",
+    "symfony/twig-bridge": "5.4.*",
+    "symfony/polyfill-ctype": "<v1.22.0",
+    "symfony/polyfill-mbstring": "<v1.22.0",
+    "ocramius/proxy-manager" : "~2.2.3",
+    "dg/composer-cleaner": "2.2.1"
+  },
+  "config": {
+    "allow-plugins": {
+      "dg/composer-cleaner": true
+    }
+  }
+}

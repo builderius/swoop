@@ -1,0 +1,18 @@
+services:
+  swoop_menu.registrator.admin_menu_pages:
+    class: 'Swoop\Bundle\MenuBundle\Registrator\AdminMenuPagesRegistrator'
+    public: true
+    arguments:
+      - '@swoop_page.registry'
+
+  swoop_menu.registrator.admin_bar_nodes:
+    class: 'Swoop\Bundle\MenuBundle\Registrator\AdminBarNodesRegistrator'
+    public: true
+
+  swoop_menu.registry.admin_menu_pages:
+    class: 'Swoop\Bundle\MenuBundle\Registry\MenuElementsRegistry'
+    public: true
+
+  swoop_menu.registry.admin_bar_nodes:
+    class: 'Swoop\Bundle\MenuBundle\Registry\MenuElementsRegistry'
+    public: true

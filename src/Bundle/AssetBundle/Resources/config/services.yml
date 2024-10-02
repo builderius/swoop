@@ -1,0 +1,121 @@
+services:
+  swoop_asset.registry.assets:
+    class: Swoop\Bundle\AssetBundle\Registry\AssetsRegistry
+    public: true
+
+  swoop_asset.registry.inline_assets:
+    class: Swoop\Bundle\AssetBundle\Registry\InlineAssetsRegistry
+    public: true
+
+  swoop_asset.path_provider.absolute:
+    class: Swoop\Bundle\AssetBundle\Path\Chain\Element\AbsoluteAssetPathProvider
+
+  swoop_asset.path_provider.bundle:
+    class: Swoop\Bundle\AssetBundle\Path\Chain\Element\BundleAssetPathProvider
+    arguments:
+      - '@service_container'
+    calls:
+      - [setSuccessor, ['@swoop_asset.path_provider.absolute']]
+
+  swoop_asset.path_provider.plugin:
+    class: Swoop\Bundle\AssetBundle\Path\Chain\Element\PluginAssetPathProvider
+    calls:
+      - [setSuccessor, ['@swoop_asset.path_provider.bundle']]
+
+  swoop_asset.path_provider.uploads:
+    class: Swoop\Bundle\AssetBundle\Path\Chain\Element\UploadsAssetPathProvider
+    calls:
+      - [setSuccessor, ['@swoop_asset.path_provider.plugin']]
+
+  swoop_asset.path_provider.main:
+    parent: swoop_asset.path_provider.uploads
+
+  swoop_asset.registrator.frontend.abstract:
+    class: Swoop\Bundle\AssetBundle\Registrator\Assets\Chain\Element\AbstractAssetsRegistratorChainElement
+    abstract: true
+    arguments:
+      - '@swoop_asset.path_provider.main'
+      - '@event_dispatcher'
+
+  swoop_asset.registrator.frontend.style:
+    class: Swoop\Bundle\AssetBundle\Registrator\Assets\Chain\Element\StyleAssetsRegistratorChainElement
+    parent: swoop_asset.registrator.frontend.abstract
+
+  swoop_asset.registrator.frontend.script:
+    class: Swoop\Bundle\AssetBundle\Registrator\Assets\Chain\Element\ScriptAssetsRegistratorChainElement
+    parent: swoop_asset.registrator.frontend.abstract
+    calls:
+      - [setSuccessor, ['@swoop_asset.registrator.frontend.style']]
+
+  swoop_asset.registrator.frontend:
+    parent: swoop_asset.registrator.frontend.script
+    public: true
+
+  swoop_asset.registrator.admin.abstract:
+    parent: swoop_asset.registrator.frontend.abstract
+    calls:
+      - [setRegistrationFunction, ['admin_enqueue_scripts']]
+
+  swoop_asset.registrator.admin.style:
+    class: Swoop\Bundle\AssetBundle\Registrator\Assets\Chain\Element\StyleAssetsRegistratorChainElement
+    parent: swoop_asset.registrator.admin.abstract
+
+  swoop_asset.registrator.admin.script:
+    class: Swoop\Bundle\AssetBundle\Registrator\Assets\Chain\Element\ScriptAssetsRegistratorChainElement
+    parent: swoop_asset.registrator.admin.abstract
+    calls:
+      - [setSuccessor, ['@swoop_asset.registrator.admin.style']]
+
+  swoop_asset.registrator.admin:
+    parent: swoop_asset.registrator.admin.script
+    public: true
+
+  swoop_asset.registrator.inline_assets.frontend.style:
+    class: Swoop\Bundle\AssetBundle\Registrator\InlineAssets\Chain\Element\FrontendStyleInlineAssetsRegistratorChainElement
+    arguments:
+      - '@event_dispatcher'
+
+  swoop_asset.registrator.inline_assets.frontend.script:
+    class: Swoop\Bundle\AssetBundle\Registrator\InlineAssets\Chain\Element\FrontendScriptInlineAssetsRegistratorChainElement
+    arguments:
+      - '@event_dispatcher'
+    calls:
+      - [setSuccessor, ['@swoop_asset.registrator.inline_assets.frontend.style']]
+
+  swoop_asset.registrator.inline_assets.frontend:
+    parent: swoop_asset.registrator.inline_assets.frontend.script
+    public: true
+
+  swoop_asset.registrator.inline_assets.admin.style:
+    class: Swoop\Bundle\AssetBundle\Registrator\InlineAssets\Chain\Element\AdminStyleInlineAssetsRegistratorChainElement
+    arguments:
+      - '@event_dispatcher'
+
+  swoop_asset.registrator.inline_assets.admin.script:
+    class: Swoop\Bundle\AssetBundle\Registrator\InlineAssets\Chain\Element\AdminScriptInlineAssetsRegistratorChainElement
+    arguments:
+      - '@event_dispatcher'
+    calls:
+      - [setSuccessor, ['@swoop_asset.registrator.inline_assets.admin.style']]
+
+  swoop_asset.registrator.inline_assets.admin:
+    parent: swoop_asset.registrator.inline_assets.admin.script
+    public: true
+
+  swoop_asset.hook.style_loader_tag:
+    class: Swoop\Bundle\AssetBundle\Hook\StyleLoaderTagFilter
+    arguments:
+      - tag: 'style_loader_tag'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: swoop_hook }
+
+  swoop_asset.hook.script_loader_tag:
+    class: Swoop\Bundle\AssetBundle\Hook\ScriptLoaderTagFilter
+    arguments:
+      - tag: 'script_loader_tag'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: swoop_hook }

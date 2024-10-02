@@ -1,0 +1,8 @@
+services:
+    swoop_taxonomy.registry.taxonomies:
+        class: 'Swoop\Bundle\TaxonomyBundle\Registry\TaxonomiesRegistry'
+        public: true
+
+    swoop_taxonomy.registrator.taxonomies:
+        class: 'Swoop\Bundle\TaxonomyBundle\Registrator\TaxonomiesRegistrator'
+        public: true

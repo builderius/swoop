@@ -1,0 +1,8 @@
+services:
+    swoop_meta_box.registry.meta_boxes:
+        class: 'Swoop\Bundle\MetaBoxBundle\Registry\MetaBoxesRegistry'
+        public: true
+
+    swoop_meta_box.registrator.meta_boxes:
+        class: 'Swoop\Bundle\MetaBoxBundle\Registrator\MetaBoxesRegistrator'
+        public: true

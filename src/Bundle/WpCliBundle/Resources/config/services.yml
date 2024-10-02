@@ -1,0 +1,8 @@
+services:
+    swoop_wpcli.registry.commands:
+        class: 'Swoop\Bundle\WpCliBundle\Registry\WpCliCommandsRegistry'
+        public: true
+
+    swoop_wpcli.registrator.commands:
+        class: 'Swoop\Bundle\WpCliBundle\Registrator\WpCliCommandsRegistrator'
+        public: true

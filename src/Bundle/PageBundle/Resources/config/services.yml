@@ -1,0 +1,10 @@
+services:
+  swoop_page.registry:
+    class: 'Swoop\Bundle\PageBundle\Registry\PagesRegistry'
+
+  swoop_page.abstract_page:
+    class: 'Swoop\Bundle\PageBundle\Model\AbstractPage'
+    abstract: true
+    calls:
+      - [ setTemplating, [ '@templating' ] ]
+

@@ -1,0 +1,42 @@
+services:
+  swoop_migration.latest_migrations_are_loaded:
+    class: 'Swoop\Bundle\MigrationBundle\Condition\LatestMigrationsAreLoadedCondition'
+    arguments:
+      - name: latest_migrations_are_loaded
+        description: 'Condition to check whether the latest migrations loaded'
+    calls:
+      - ['setPluginsVersionsProvider', ['@swoop_kernel.provider.plugins_versions']]
+    tags:
+      - {name: swoop_condition}
+
+  swoop_migration.latest_migrations_are_not_loaded:
+    parent: 'swoop_migration.latest_migrations_are_loaded'
+    calls:
+      - ['setName', ['latest_migrations_are_not_loaded']]
+      - ['setDescription', ['Condition to check whether the latest migrations not loaded']]
+      - ['setValidResult', [false]]
+    tags:
+      - {name: swoop_condition}
+
+  swoop_migration.loader.migrations:
+    class: 'Swoop\Bundle\MigrationBundle\Loader\MigrationsLoader'
+    arguments:
+      - '%kernel.plugins%'
+      - '@service_container'
+
+  swoop_migration.executor.migrations:
+    class: 'Swoop\Bundle\MigrationBundle\Executor\MigrationsExecutor'
+    arguments:
+      - '%kernel.plugins%'
+
+  swoop_migration.hook.migrations_execution:
+    class: 'Swoop\Bundle\MigrationBundle\Hook\MigrationsExecutionHook'
+    arguments:
+      - tag: 'init'
+        init_hook: 'plugins_loaded'
+    calls:
+      - [setLoader, ['@swoop_migration.loader.migrations']]
+      - [setExecutor, ['@swoop_migration.executor.migrations']]
+      - [addCondition, ['@latest_migrations_are_not_loaded']]
+    tags:
+      - { name: swoop_hook }

@@ -1,0 +1,10 @@
+services:
+    swoop_condition.registry.conditions:
+        class: 'Swoop\Bundle\ConditionBundle\Registry\ConditionsRegistry'
+
+    swoop_condition.command.conditions_list:
+        class: 'Swoop\Bundle\ConditionBundle\Command\ConditionsListCommand'
+        arguments:
+            - '@swoop_condition.registry.conditions'
+        tags:
+            - { name: swoop_wpcli_command }
