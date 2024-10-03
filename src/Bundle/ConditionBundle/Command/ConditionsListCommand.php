@@ -7,7 +7,7 @@ use Swoop\Bundle\WpCliBundle\Model\WpCliCommandInterface;
 
 class ConditionsListCommand implements WpCliCommandInterface
 {
-    const NAME = 'moomoo:conditions-list';
+    const NAME = 'swoop:conditions-list';
 
     /**
      * @var ConditionsRegistryInterface
