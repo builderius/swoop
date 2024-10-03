@@ -2,11 +2,8 @@
 
 namespace Swoop\Bundle\ConditionBundle\DependencyInjection\CompilerPass;
 
-use Symfony\Component\DependencyInjection\ChildDefinition;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Reference;
 
 class ConditionsNamesServicesCompilerPass implements CompilerPassInterface
 {
@@ -21,18 +18,20 @@ class ConditionsNamesServicesCompilerPass implements CompilerPassInterface
         if (!$conditions) {
             return;
         }
+
         foreach ($conditions as $condition => $attributes) {
             $definition = $container->getDefinition($condition);
             $arguments = $definition->getArguments();
-            if (!empty($arguments)) {
-                $newDef = new ChildDefinition($condition);
-                $container->setDefinition($arguments[0]['name'], $newDef);
+
+            if (!empty($arguments) && isset($arguments[0]['name'])) {
+                $aliasName = $arguments[0]['name'];
+                $container->setAlias($aliasName, $condition)->setPublic(true);
             } else {
                 $calls = $definition->getMethodCalls();
                 foreach ($calls as $call) {
                     if ($call[0] === 'setName') {
-                        $newDef = new ChildDefinition($condition);
-                        $container->setDefinition($call[1][0], $newDef);
+                        $aliasName = $call[1][0];
+                        $container->setAlias($aliasName, $condition)->setPublic(true);
                     }
                 }
             }
