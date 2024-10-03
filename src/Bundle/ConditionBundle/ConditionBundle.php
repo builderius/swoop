@@ -18,7 +18,7 @@ class ConditionBundle extends Bundle
 
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_condition',
+                'wp_condition',
                 'swoop_condition.registry.conditions',
                 'addCondition'
             )

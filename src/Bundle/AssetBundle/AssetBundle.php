@@ -25,7 +25,7 @@ class AssetBundle extends Bundle
 
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_inline_asset',
+                'wp_inline_asset',
                 'swoop_asset.registry.inline_assets',
                 'addAsset'
             )
@@ -33,7 +33,7 @@ class AssetBundle extends Bundle
 
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_asset',
+                'wp_asset',
                 'swoop_asset.registry.assets',
                 'addAsset'
             )

@@ -19,7 +19,7 @@ class TaxonomyBundle extends Bundle
 
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_taxonomy',
+                'wp_taxonomy',
                 'swoop_taxonomy.registry.taxonomies',
                 'addTaxonomy'
             )

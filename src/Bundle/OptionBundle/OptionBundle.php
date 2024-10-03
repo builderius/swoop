@@ -18,7 +18,7 @@ class OptionBundle extends Bundle
         /** @var ContainerBuilder $container */
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_option',
+                'wp_option',
                 'swoop_option.registrator.main',
                 'addOption'
             )

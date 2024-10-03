@@ -60,7 +60,7 @@ abstract class AbstractAssetsRegistratorChainElement implements
             $this->registrationFunction,
             function () use ($assets) {
                 $event = new AssetsContainingEvent($assets);
-                $this->eventDispatcher->dispatch($event, 'swoop_assets_before_registration');
+                $this->eventDispatcher->dispatch($event, 'wp_assets_before_registration');
                 foreach ($event->getAssets() as $asset) {
                     if ($asset instanceof ConditionAwareInterface && $asset->hasConditions()) {
                         $evaluated = true;

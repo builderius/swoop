@@ -19,14 +19,14 @@ class MenuBundle extends Bundle
 
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_admin_menu_page',
+                'wp_admin_menu_page',
                 'swoop_menu.registry.admin_menu_pages',
                 'addMenuElement'
             )
         );
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_admin_bar_node',
+                'wp_admin_bar_node',
                 'swoop_menu.registry.admin_bar_nodes',
                 'addMenuElement'
             )

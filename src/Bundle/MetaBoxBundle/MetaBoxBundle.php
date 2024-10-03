@@ -19,7 +19,7 @@ class MetaBoxBundle extends Bundle
 
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_meta_box',
+                'wp_meta_box',
                 'swoop_meta_box.registry.meta_boxes',
                 'addMetaBox'
             )

@@ -19,7 +19,7 @@ class WpCliBundle extends Bundle
         /** @var ContainerBuilder $container */
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_wpcli_command',
+                'wp_cli_command',
                 'swoop_wpcli.registry.commands',
                 'addCommand'
             )

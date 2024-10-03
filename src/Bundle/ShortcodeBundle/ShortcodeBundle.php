@@ -18,7 +18,7 @@ class ShortcodeBundle extends Bundle
         /** @var ContainerBuilder $container */
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_shortcode',
+                'wp_shortcode',
                 'swoop_shortcode.registrator.shortcodes',
                 'addShortcode'
             )

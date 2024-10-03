@@ -19,7 +19,7 @@ class RequestBundle extends Bundle
 
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_request_handler',
+                'wp_request_handler',
                 'swoop_request.registry.request_handlers',
                 'addHandler'
             )

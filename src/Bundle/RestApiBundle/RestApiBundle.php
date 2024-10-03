@@ -23,21 +23,21 @@ class RestApiBundle extends Bundle
 
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_rest_endpoint',
+                'wp_rest_endpoint',
                 'swoop_rest_api.registry.rest_api.endpoints',
                 'addEndpoint'
             )
         );
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_rest_controller',
+                'wp_rest_controller',
                 'swoop_rest_api.registry.rest_api.controllers',
                 'addController'
             )
         );
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_rest_field_provider',
+                'wp_rest_field_provider',
                 'swoop_rest_api.registry.rest_api.field_providers',
                 'addProvider'
             )

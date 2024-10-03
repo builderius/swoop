@@ -19,7 +19,7 @@ class HookBundle extends Bundle
 
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_hook',
+                'wp_hook',
                 'swoop_hook.registry.hooks',
                 'addHook'
             )

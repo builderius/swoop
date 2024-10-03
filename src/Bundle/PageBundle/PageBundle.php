@@ -17,7 +17,7 @@ class PageBundle extends Bundle
 
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_page',
+                'wp_page',
                 'swoop_page.registry',
                 'addPage'
             )

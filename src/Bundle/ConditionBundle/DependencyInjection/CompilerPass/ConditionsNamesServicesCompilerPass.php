@@ -10,7 +10,7 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class ConditionsNamesServicesCompilerPass implements CompilerPassInterface
 {
-    const CONDITION_TAG = 'swoop_condition';
+    const CONDITION_TAG = 'wp_condition';
 
     /**
      * @var array

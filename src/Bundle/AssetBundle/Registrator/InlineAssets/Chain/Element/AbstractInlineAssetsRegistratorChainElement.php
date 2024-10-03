@@ -47,7 +47,7 @@ abstract class AbstractInlineAssetsRegistratorChainElement implements
     {
         add_action($this->registrationFunction, function () use ($assets) {
             $event = new InlineAssetsContainingEvent($assets);
-            $this->eventDispatcher->dispatch($event, 'swoop_inline_assets_before_dependencies_registration');
+            $this->eventDispatcher->dispatch($event, 'wp_inline_assets_before_dependencies_registration');
             foreach ($event->getAssets() as $asset) {
                 if (!empty($asset->getDependencies())) {
                     if ($asset instanceof ConditionAwareInterface && $asset->hasConditions()) {
@@ -96,7 +96,7 @@ abstract class AbstractInlineAssetsRegistratorChainElement implements
                 $this->assetRegistrationFunction,
                 function () use ($type, $assets) {
                     $event = new InlineAssetsContainingEvent($assets);
-                    $this->eventDispatcher->dispatch($event, sprintf('swoop_inline_assets_before_%ss_registration', $type));
+                    $this->eventDispatcher->dispatch($event, sprintf('wp_inline_assets_before_%ss_registration', $type));
                     foreach ($event->getAssets() as $asset) {
                         if ($asset instanceof ConditionAwareInterface && $asset->hasConditions()) {
                             $evaluated = true;

@@ -21,14 +21,14 @@ class PostBundle extends Bundle
 
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_post_type',
+                'wp_post_type',
                 'swoop_post.registry.post_types',
                 'addPostType'
             )
         );
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_post_status',
+                'wp_post_status',
                 'swoop_post.registry.post_statuses',
                 'addPostStatus'
             )

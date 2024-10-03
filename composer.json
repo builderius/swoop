@@ -19,10 +19,11 @@
     "symfony/twig-bridge": "5.4.*",
     "symfony/polyfill-ctype": "<v1.22.0",
     "symfony/polyfill-mbstring": "<v1.22.0",
-    "ocramius/proxy-manager" : "~2.2.3",
+    "ocramius/proxy-manager" : "~2.13.*",
     "dg/composer-cleaner": "2.2.1"
   },
   "config": {
+    "vendor-dir": "vendor-prefixed",
     "allow-plugins": {
       "dg/composer-cleaner": true
     }

@@ -21,14 +21,14 @@ class MediaBundle extends Bundle
 
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_image_size',
+                'wp_image_size',
                 'swoop_media.registrator.image_sizes',
                 'addImageSize'
             )
         );
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_mime_type',
+                'wp_mime_type',
                 'swoop_media.registrator.mime_types',
                 'addMimeType'
             )

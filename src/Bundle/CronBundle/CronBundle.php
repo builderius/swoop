@@ -19,14 +19,14 @@ class CronBundle extends Bundle
 
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_cron_schedule',
+                'wp_cron_schedule',
                 'swoop_cron.hook.cron_schedules_registration',
                 'addCronSchedule'
             )
         );
         $container->addCompilerPass(
             new KernelCompilerPass(
-                'swoop_cron_command',
+                'wp_cron_command',
                 'swoop_cron.registry.cron_commands',
                 'addCronCommand'
             )

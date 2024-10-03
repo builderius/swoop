@@ -9,8 +9,8 @@ use Symfony\Component\DependencyInjection\Reference;
 
 class ScriptLocalizationsCompilerPass implements CompilerPassInterface
 {
-    const LOCALIZATION_TAG = 'swoop_script_localization';
-    const ASSET_TAG = 'swoop_asset';
+    const LOCALIZATION_TAG = 'wp_script_localization';
+    const ASSET_TAG = 'wp_asset';
 
     /**
      * @var array
