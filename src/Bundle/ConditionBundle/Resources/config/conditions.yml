@@ -6,7 +6,7 @@ services:
         description: 'Condition to check whether the Guttenberg is installed'
         function: register_block_type
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_singular:
     class: Swoop\Bundle\ConditionBundle\Model\SimpleCondition
@@ -15,7 +15,7 @@ services:
         description: 'Condition to check whether the query is for an existing single post of any post type'
         function: is_singular
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_user_logged_in:
     class: Swoop\Bundle\ConditionBundle\Model\SimpleCondition
@@ -24,7 +24,7 @@ services:
         description: 'Condition to check whether the current visitor is a logged in user'
         function: is_user_logged_in
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.user_has_administrator_role:
     class: Swoop\Bundle\ConditionBundle\Model\SimpleCondition
@@ -34,7 +34,7 @@ services:
         function: current_user_can
         arguments: ['administrator']
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.user_has_editor_role:
     class: Swoop\Bundle\ConditionBundle\Model\SimpleCondition
@@ -44,7 +44,7 @@ services:
         function: current_user_can
         arguments: ['editor']
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_user_not_logged_in:
     parent: swoop_condition.is_user_logged_in
@@ -53,7 +53,7 @@ services:
       - [setDescription, ['Condition to check whether the current visitor is not logged in user']]
       - [setValidResult, [false]]
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_backend:
     class: Swoop\Bundle\ConditionBundle\Model\SimpleCondition
@@ -62,7 +62,7 @@ services:
         description: 'Condition to check whether the current request is for an administrative interface page'
         function: is_admin
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_frontend:
     parent: swoop_condition.is_backend
@@ -72,7 +72,7 @@ services:
       - ['setValidResult', [false]]
       - ['addDependOnCondition', ['@is_not_customize_preview']]
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_customize_preview:
     class: Swoop\Bundle\ConditionBundle\Model\SimpleCondition
@@ -81,7 +81,7 @@ services:
         description: 'Condition to check whether the current request is for previewing site in the Customizer'
         function: is_customize_preview
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_not_customize_preview:
     parent: swoop_condition.is_customize_preview
@@ -90,7 +90,7 @@ services:
       - ['setDescription', ['Condition to check whether the current request is not for previewing site in the Customizer']]
       - ['setValidResult', [false]]
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_post_create_page:
     class: Swoop\Bundle\ConditionBundle\Model\IsPostEditPageCondition
@@ -100,7 +100,7 @@ services:
         arguments:
           action: 'new'
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_post_edit_page:
     class: Swoop\Bundle\ConditionBundle\Model\IsPostEditPageCondition
@@ -110,7 +110,7 @@ services:
         arguments:
           action: 'edit'
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_post_create_or_edit_page:
     class: Swoop\Bundle\ConditionBundle\Model\IsPostEditPageCondition
@@ -118,7 +118,7 @@ services:
       - name: is_post_create_or_edit_page
         description: 'Condition to check whether the current request is for post/page create or update screen'
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_main_site:
     class: Swoop\Bundle\ConditionBundle\Model\SimpleCondition
@@ -127,7 +127,7 @@ services:
         description: 'Condition to check whether the site is the main site of the current network'
         function: is_main_site
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_not_main_site:
     parent: swoop_condition.is_main_site
@@ -136,7 +136,7 @@ services:
       - [setDescription, ['Condition to check whether the site is not main site of the current network']]
       - [setValidResult, [false]]
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_front_page:
     class: Swoop\Bundle\ConditionBundle\Model\SimpleCondition
@@ -145,7 +145,7 @@ services:
         description: 'Condition to check whether the query is for the front page of the site'
         function: is_front_page
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_not_front_page:
     parent: swoop_condition.is_front_page
@@ -154,7 +154,7 @@ services:
       - [setDescription, ['Condition to check whether the query is not for the front page of the site']]
       - [setValidResult, [false]]
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_in_the_loop:
     class: Swoop\Bundle\ConditionBundle\Model\SimpleCondition
@@ -163,7 +163,7 @@ services:
         description: 'Condition to check whether whether the caller is in the Loop'
         function: in_the_loop
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }
   
   swoop_condition.is_not_in_the_loop:
     parent: swoop_condition.is_in_the_loop
@@ -172,4 +172,4 @@ services:
       - [setDescription, ['Condition to check whether whether the caller is not in the Loop']]
       - [setValidResult, [false]]
     tags:
-      - { name: swoop_condition }
+      - { name: wp_condition }

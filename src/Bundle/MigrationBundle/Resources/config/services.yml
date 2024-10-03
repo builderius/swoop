@@ -7,7 +7,7 @@ services:
     calls:
       - ['setPluginsVersionsProvider', ['@swoop_kernel.provider.plugins_versions']]
     tags:
-      - {name: swoop_condition}
+      - {name: wp_condition}
 
   swoop_migration.latest_migrations_are_not_loaded:
     parent: 'swoop_migration.latest_migrations_are_loaded'
@@ -16,7 +16,7 @@ services:
       - ['setDescription', ['Condition to check whether the latest migrations not loaded']]
       - ['setValidResult', [false]]
     tags:
-      - {name: swoop_condition}
+      - {name: wp_condition}
 
   swoop_migration.loader.migrations:
     class: 'Swoop\Bundle\MigrationBundle\Loader\MigrationsLoader'
