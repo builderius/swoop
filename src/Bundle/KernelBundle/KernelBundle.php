@@ -6,8 +6,8 @@ use Swoop\Bundle\KernelBundle\Boot\BootServiceInterface;
 use Swoop\Bundle\KernelBundle\Boot\CompositeBootService;
 use Swoop\Bundle\KernelBundle\Bundle\Bundle;
 use Swoop\Bundle\KernelBundle\DependencyInjection\CompilerPass\KernelCompilerPass;
+use Swoop\Bundle\KernelBundle\DependencyInjection\CompilerPass\RegisterListenersPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\EventDispatcher\DependencyInjection\RegisterListenersPass;
 
 class KernelBundle extends Bundle
 {
