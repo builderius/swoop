@@ -13,11 +13,6 @@ class ConditionsNamesServicesCompilerPass implements CompilerPassInterface
     const CONDITION_TAG = 'wp_condition';
 
     /**
-     * @var array
-     */
-    private $conditions;
-
-    /**
      * @inheritDoc
      */
     public function process(ContainerBuilder $container)
@@ -33,7 +28,7 @@ class ConditionsNamesServicesCompilerPass implements CompilerPassInterface
                 $newDef = new ChildDefinition($condition);
                 $container->setDefinition($arguments[0]['name'], $newDef);
             } else {
-                $calls = $definition->getMethodCalls('setName');
+                $calls = $definition->getMethodCalls();
                 foreach ($calls as $call) {
                     if ($call[0] === 'setName') {
                         $newDef = new ChildDefinition($condition);
