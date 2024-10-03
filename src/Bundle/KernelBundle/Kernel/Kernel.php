@@ -313,7 +313,7 @@ class Kernel
         $fs = new Filesystem();
         $currentPluginsVersions = (new PluginsVersionsProvider($this->plugins))->getPluginsVersions();
         $cacheDir = sprintf('%s/%s/cache', wp_upload_dir()['basedir'], $prefix);
-        $class = 'MooMooCachedContainer';
+        $class = 'SwoopCachedContainer';
         $cache = new ConfigCache($cacheDir . '/' . $class . '.php', $this->debug);
         $cachePath = $cache->getPath();
         foreach ($currentPluginsVersions as $plugin => $version) {
@@ -511,7 +511,7 @@ class Kernel
         if ($this->debug === true) {
             $prefix = strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', explode('\\', get_class($this)))[0]);
             $cacheDir = sprintf('%s/%s/cache/', wp_upload_dir()['basedir'], $prefix);
-            $class = 'MooMooCachedContainer';
+            $class = 'SwoopCachedContainer';
 
             $xmlCache = new ConfigCache($cacheDir . '/' . $class . '.xml', false);
             $xmlCache->write((new XmlDumper($container))->dump(), $container->getResources());
