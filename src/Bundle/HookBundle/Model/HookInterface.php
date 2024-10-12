@@ -40,5 +40,5 @@ interface HookInterface
     /**
      * @return mixed
      */
-    public function getFunction();
+    public function getFunction(...$args);
 }

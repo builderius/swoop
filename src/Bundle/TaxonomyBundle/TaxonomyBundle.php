@@ -4,7 +4,7 @@ namespace Swoop\Bundle\TaxonomyBundle;
 
 use Swoop\Bundle\KernelBundle\Bundle\Bundle;
 use Swoop\Bundle\KernelBundle\DependencyInjection\CompilerPass\KernelCompilerPass;
-use Swoop\Bundle\TaxonomyBundle\Registrator\TaxonomiesRegistratorInterface;
+use Swoop\Bundle\TaxonomyBundle\Processor\TaxonomiesProcessorInterface;
 use Swoop\Bundle\TaxonomyBundle\Registry\TaxonomiesRegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -33,9 +33,9 @@ class TaxonomyBundle extends Bundle
     {
         /** @var TaxonomiesRegistryInterface $restMetaFieldProvidersRegistry */
         $taxonomiesRegistry = $this->container->get('swoop_taxonomy.registry.taxonomies');
-        /** @var TaxonomiesRegistratorInterface $taxonomiesRegistrator */
-        $taxonomiesRegistrator = $this->container->get('swoop_taxonomy.registrator.taxonomies');
-        $taxonomiesRegistrator->registerTaxonomies($taxonomiesRegistry->getTaxonomies());
+        /** @var TaxonomiesProcessorInterface $taxonomiesProcessor */
+        $taxonomiesProcessor = $this->container->get('swoop_taxonomy.processor.taxonomies');
+        $taxonomiesProcessor->registerTaxonomies($taxonomiesRegistry->getTaxonomies());
         
         parent::boot();
     }

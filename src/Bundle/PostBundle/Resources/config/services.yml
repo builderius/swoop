@@ -3,14 +3,14 @@ services:
     class: 'Swoop\Bundle\PostBundle\PostType\Registry\PostTypesRegistry'
     public: true
 
-  swoop_post.registrator.post_types:
-    class: 'Swoop\Bundle\PostBundle\PostType\Registrator\PostTypesRegistrator'
+  swoop_post.processor.post_types:
+    class: 'Swoop\Bundle\PostBundle\PostType\Processor\PostTypesProcessor'
     public: true
 
   swoop_post.registry.post_statuses:
     class: 'Swoop\Bundle\PostBundle\PostStatus\Registry\PostStatusesRegistry'
     public: true
 
-  swoop_post.registrator.post_statuses:
-    class: 'Swoop\Bundle\PostBundle\PostStatus\Registrator\PostStatusesRegistrator'
+  swoop_post.processor.post_statuses:
+    class: 'Swoop\Bundle\PostBundle\PostStatus\Processor\PostStatusesProcessor'
     public: true

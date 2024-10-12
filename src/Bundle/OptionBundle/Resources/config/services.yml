@@ -1,13 +1,13 @@
 services:
-  swoop_option.registrator.non_site_option:
-    class: 'Swoop\Bundle\OptionBundle\Registrator\Chain\Element\NonSiteOptionsRegistratorChainElement'
+  swoop_option.processor.non_site_option:
+    class: 'Swoop\Bundle\OptionBundle\Processor\Chain\Element\NonSiteOptionsProcessorChainElement'
     calls:
-      - ['setSuccessor', ['@swoop_option.registrator.site_option']]
+      - ['setSuccessor', ['@swoop_option.processor.site_option']]
 
-  swoop_option.registrator.site_option:
-    class: 'Swoop\Bundle\OptionBundle\Registrator\Chain\Element\SiteOptionsRegistratorChainElement'
+  swoop_option.processor.site_option:
+    class: 'Swoop\Bundle\OptionBundle\Processor\Chain\Element\SiteOptionsProcessorChainElement'
 
-  swoop_option.registrator.main:
+  swoop_option.processor.main:
     public: true
-    parent: swoop_option.registrator.non_site_option
+    parent: swoop_option.processor.non_site_option
 

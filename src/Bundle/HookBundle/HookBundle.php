@@ -2,7 +2,7 @@
 
 namespace Swoop\Bundle\HookBundle;
 
-use Swoop\Bundle\HookBundle\Registrator\HooksRegistratorInterface;
+use Swoop\Bundle\HookBundle\Processor\HooksProcessorInterface;
 use Swoop\Bundle\HookBundle\Registry\HooksRegistryInterface;
 use Swoop\Bundle\KernelBundle\Bundle\Bundle;
 use Swoop\Bundle\KernelBundle\DependencyInjection\CompilerPass\KernelCompilerPass;
@@ -33,9 +33,9 @@ class HookBundle extends Bundle
     {
         /** @var HooksRegistryInterface $hooksRegistry */
         $hooksRegistry = $this->container->get('swoop_hook.registry.hooks');
-        /** @var HooksRegistratorInterface $hooksRegistrator */
-        $hooksRegistrator = $this->container->get('swoop_hook.hooks_registrator.main');
-        $hooksRegistrator->registerHooks($hooksRegistry->getHooks());
+        /** @var HooksProcessorInterface $hooksProcessor */
+        $hooksProcessor = $this->container->get('swoop_hook.hooks_processor.main');
+        $hooksProcessor->registerHooks($hooksRegistry->getHooks());
 
         parent::boot();
     }

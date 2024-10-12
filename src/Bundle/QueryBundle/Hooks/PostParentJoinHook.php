@@ -11,10 +11,10 @@ class PostParentJoinHook extends AbstractFilter
     /**
      * @inheritDoc
      */
-    public function getFunction()
+    public function getFunction(...$args)
     {
-        $join = func_get_arg(0);
-        $query = func_get_arg(1);
+        $join = $args[0];
+        $query = $args[1];
         if (isset($query->query[ParentNameInHook::QUERY_ARGUMENT]) ||
             isset($query->query[ParentNameNotInHook::QUERY_ARGUMENT])) {
             global $wpdb;

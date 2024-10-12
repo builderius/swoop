@@ -2,12 +2,12 @@
 
 namespace Swoop\Bundle\MediaBundle;
 
-use Swoop\Bundle\HookBundle\Registrator\HooksRegistratorInterface;
+use Swoop\Bundle\HookBundle\Processor\HooksProcessorInterface;
 use Swoop\Bundle\HookBundle\Registry\HooksRegistryInterface;
 use Swoop\Bundle\KernelBundle\Bundle\Bundle;
 use Swoop\Bundle\KernelBundle\DependencyInjection\CompilerPass\KernelCompilerPass;
-use Swoop\Bundle\MediaBundle\Registrator\ImageSizesRegistratorInterface;
-use Swoop\Bundle\MediaBundle\Registrator\MimeTypesRegistratorInterface;
+use Swoop\Bundle\MediaBundle\Processor\ImageSizesProcessorInterface;
+use Swoop\Bundle\MediaBundle\Processor\MimeTypesProcessorInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class MediaBundle extends Bundle
@@ -22,14 +22,14 @@ class MediaBundle extends Bundle
         $container->addCompilerPass(
             new KernelCompilerPass(
                 'wp_image_size',
-                'swoop_media.registrator.image_sizes',
+                'swoop_media.processor.image_sizes',
                 'addImageSize'
             )
         );
         $container->addCompilerPass(
             new KernelCompilerPass(
                 'wp_mime_type',
-                'swoop_media.registrator.mime_types',
+                'swoop_media.processor.mime_types',
                 'addMimeType'
             )
         );
@@ -40,13 +40,13 @@ class MediaBundle extends Bundle
      */
     public function boot()
     {
-        /** @var ImageSizesRegistratorInterface $imageSizesRegistrator */
-        $imageSizesRegistrator = $this->container->get('swoop_media.registrator.image_sizes');
-        $imageSizesRegistrator->registerImageSizes();
+        /** @var ImageSizesProcessorInterface $imageSizesProcessor */
+        $imageSizesProcessor = $this->container->get('swoop_media.processor.image_sizes');
+        $imageSizesProcessor->registerImageSizes();
 
-        /** @var MimeTypesRegistratorInterface $mimeTypesRegistrator */
-        $mimeTypesRegistrator = $this->container->get('swoop_media.registrator.mime_types');
-        $mimeTypesRegistrator->registerMimeTypes();
+        /** @var MimeTypesProcessorInterface $mimeTypesProcessor */
+        $mimeTypesProcessor = $this->container->get('swoop_media.processor.mime_types');
+        $mimeTypesProcessor->registerMimeTypes();
         
         parent::boot();
     }

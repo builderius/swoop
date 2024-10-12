@@ -4,7 +4,7 @@ namespace Swoop\Bundle\MetaBoxBundle;
 
 use Swoop\Bundle\KernelBundle\Bundle\Bundle;
 use Swoop\Bundle\KernelBundle\DependencyInjection\CompilerPass\KernelCompilerPass;
-use Swoop\Bundle\MetaBoxBundle\Registrator\MetaBoxesRegistratorInterface;
+use Swoop\Bundle\MetaBoxBundle\Processor\MetaBoxesProcessorInterface;
 use Swoop\Bundle\MetaBoxBundle\Registry\MetaBoxesRegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -33,9 +33,9 @@ class MetaBoxBundle extends Bundle
     {
         /** @var MetaBoxesRegistryInterface $metaBoxesRegistry */
         $metaBoxesRegistry = $this->container->get('swoop_meta_box.registry.meta_boxes');
-        /** @var MetaBoxesRegistratorInterface $metaBoxesRegistrator */
-        $metaBoxesRegistrator = $this->container->get('swoop_meta_box.registrator.meta_boxes');
-        $metaBoxesRegistrator->registerMetaBoxes($metaBoxesRegistry->getMetaBoxes());
+        /** @var MetaBoxesProcessorInterface $metaBoxesProcessor */
+        $metaBoxesProcessor = $this->container->get('swoop_meta_box.processor.meta_boxes');
+        $metaBoxesProcessor->registerMetaBoxes($metaBoxesRegistry->getMetaBoxes());
         
         parent::boot();
     }

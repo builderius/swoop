@@ -4,7 +4,7 @@ namespace Swoop\Bundle\MenuBundle;
 
 use Swoop\Bundle\KernelBundle\Bundle\Bundle;
 use Swoop\Bundle\KernelBundle\DependencyInjection\CompilerPass\KernelCompilerPass;
-use Swoop\Bundle\MenuBundle\Registrator\MenuElementsRegistratorInterface;
+use Swoop\Bundle\MenuBundle\Processor\MenuElementsProcessorInterface;
 use Swoop\Bundle\MenuBundle\Registry\MenuElementsRegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -41,15 +41,15 @@ class MenuBundle extends Bundle
         if (is_admin()) {
             /** @var MenuElementsRegistryInterface $adminMenuPagesRegistry */
             $adminMenuPagesRegistry = $this->container->get('swoop_menu.registry.admin_menu_pages');
-            /** @var MenuElementsRegistratorInterface $adminMenuPagesRegistrator */
-            $adminMenuPagesRegistrator = $this->container->get('swoop_menu.registrator.admin_menu_pages');
-            $adminMenuPagesRegistrator->register($adminMenuPagesRegistry->getMenuElements());
+            /** @var MenuElementsProcessorInterface $adminMenuPagesProcessor */
+            $adminMenuPagesProcessor = $this->container->get('swoop_menu.processor.admin_menu_pages');
+            $adminMenuPagesProcessor->register($adminMenuPagesRegistry->getMenuElements());
         }
         /** @var MenuElementsRegistryInterface $adminBarNodesRegistry */
         $adminBarNodesRegistry = $this->container->get('swoop_menu.registry.admin_bar_nodes');
-        /** @var MenuElementsRegistratorInterface $adminMenuPagesRegistrator */
-        $adminBarNodesRegistrator = $this->container->get('swoop_menu.registrator.admin_bar_nodes');
-        $adminBarNodesRegistrator->register($adminBarNodesRegistry->getMenuElements());
+        /** @var MenuElementsProcessorInterface $adminMenuPagesProcessor */
+        $adminBarNodesProcessor = $this->container->get('swoop_menu.processor.admin_bar_nodes');
+        $adminBarNodesProcessor->register($adminBarNodesRegistry->getMenuElements());
 
         parent::boot();
     }

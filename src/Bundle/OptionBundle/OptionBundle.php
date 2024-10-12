@@ -4,7 +4,7 @@ namespace Swoop\Bundle\OptionBundle;
 
 use Swoop\Bundle\KernelBundle\Bundle\Bundle;
 use Swoop\Bundle\KernelBundle\DependencyInjection\CompilerPass\KernelCompilerPass;
-use Swoop\Bundle\OptionBundle\Registrator\OptionsRegistratorInterface;
+use Swoop\Bundle\OptionBundle\Processor\OptionsProcessorInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class OptionBundle extends Bundle
@@ -19,7 +19,7 @@ class OptionBundle extends Bundle
         $container->addCompilerPass(
             new KernelCompilerPass(
                 'wp_option',
-                'swoop_option.registrator.main',
+                'swoop_option.processor.main',
                 'addOption'
             )
         );
@@ -30,9 +30,9 @@ class OptionBundle extends Bundle
      */
     public function boot()
     {
-        /** @var OptionsRegistratorInterface $optionsRegistrator */
-        $optionsRegistrator = $this->container->get('swoop_option.registrator.main');
-        $optionsRegistrator->registerOptions();
+        /** @var OptionsProcessorInterface $optionsProcessor */
+        $optionsProcessor = $this->container->get('swoop_option.processor.main');
+        $optionsProcessor->registerOptions();
 
         parent::boot();
     }

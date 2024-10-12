@@ -4,7 +4,7 @@ namespace Swoop\Bundle\WpCliBundle;
 
 use Swoop\Bundle\KernelBundle\Bundle\Bundle;
 use Swoop\Bundle\KernelBundle\DependencyInjection\CompilerPass\KernelCompilerPass;
-use Swoop\Bundle\WpCliBundle\Registrator\WpCliCommandsRegistratorInterface;
+use Swoop\Bundle\WpCliBundle\Processor\WpCliCommandsProcessorInterface;
 use Swoop\Bundle\WpCliBundle\Registry\WpCliCommandsRegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -33,9 +33,9 @@ class WpCliBundle extends Bundle
     {
         /** @var WpCliCommandsRegistryInterface $commandsRegistry */
         $commandsRegistry = $this->container->get('swoop_wpcli.registry.commands');
-        /** @var WpCliCommandsRegistratorInterface $commandsRegistrator */
-        $commandsRegistrator = $this->container->get('swoop_wpcli.registrator.commands');
-        $commandsRegistrator->registerCommands($commandsRegistry->getCommands());
+        /** @var WpCliCommandsProcessorInterface $commandsProcessor */
+        $commandsProcessor = $this->container->get('swoop_wpcli.processor.commands');
+        $commandsProcessor->registerCommands($commandsRegistry->getCommands());
 
         parent::boot();
     }

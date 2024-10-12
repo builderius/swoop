@@ -1,12 +1,12 @@
 services:
-  swoop_menu.registrator.admin_menu_pages:
-    class: 'Swoop\Bundle\MenuBundle\Registrator\AdminMenuPagesRegistrator'
+  swoop_menu.processor.admin_menu_pages:
+    class: 'Swoop\Bundle\MenuBundle\Processor\AdminMenuPagesProcessor'
     public: true
     arguments:
       - '@swoop_page.registry'
 
-  swoop_menu.registrator.admin_bar_nodes:
-    class: 'Swoop\Bundle\MenuBundle\Registrator\AdminBarNodesRegistrator'
+  swoop_menu.processor.admin_bar_nodes:
+    class: 'Swoop\Bundle\MenuBundle\Processor\AdminBarNodesProcessor'
     public: true
 
   swoop_menu.registry.admin_menu_pages:

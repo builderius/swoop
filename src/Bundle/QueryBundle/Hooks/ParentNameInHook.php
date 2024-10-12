@@ -11,10 +11,10 @@ class ParentNameInHook extends AbstractFilter
     /**
      * @inheritDoc
      */
-    public function getFunction()
+    public function getFunction(...$args)
     {
-        $where = func_get_arg(0);
-        $query = func_get_arg(1);
+        $where = $args[0];
+        $query = $args[1];
         if (isset($query->query[self::QUERY_ARGUMENT]) && is_array($query->query[self::QUERY_ARGUMENT])) {
             global $wpdb;
             $names = array_filter(array_map(function ($name) use ($wpdb) {

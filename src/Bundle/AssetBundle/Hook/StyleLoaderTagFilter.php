@@ -9,10 +9,10 @@ class StyleLoaderTagFilter extends AbstractFilter
     /**
      * @inheritDoc
      */
-    public function getFunction()
+    public function getFunction(...$args)
     {
-        $tag = func_get_arg(0);
-        $handle = func_get_arg(1);
+        $tag = $args[0];
+        $handle = $args[1];
         if ($htmlAttributes = wp_styles()->get_data($handle, 'htmlAttributes')) {
             if (is_array($htmlAttributes) && !empty($htmlAttributes)) {
                 $formattedAttributes = [];

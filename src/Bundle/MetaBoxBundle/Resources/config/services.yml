@@ -3,6 +3,6 @@ services:
         class: 'Swoop\Bundle\MetaBoxBundle\Registry\MetaBoxesRegistry'
         public: true
 
-    swoop_meta_box.registrator.meta_boxes:
-        class: 'Swoop\Bundle\MetaBoxBundle\Registrator\MetaBoxesRegistrator'
+    swoop_meta_box.processor.meta_boxes:
+        class: 'Swoop\Bundle\MetaBoxBundle\Processor\MetaBoxesProcessor'
         public: true

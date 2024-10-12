@@ -57,9 +57,9 @@ class CronSchedulesRegistrationHook extends AbstractHook
     /**
      * @inheritDoc
      */
-    public function getFunction()
+    public function getFunction(...$args)
     {
-        $schedules = func_get_arg(0);
+        $schedules = $args[0];
         foreach ($this->schedules as $name => $schedule) {
             $schedules[$name] = [
                 CronSchedule::INTERVAL_FIELD => (int)$schedule->getInterval(),

@@ -4,7 +4,7 @@ namespace Swoop\Bundle\RequestBundle;
 
 use Swoop\Bundle\KernelBundle\Bundle\Bundle;
 use Swoop\Bundle\KernelBundle\DependencyInjection\CompilerPass\KernelCompilerPass;
-use Swoop\Bundle\RequestBundle\Handler\Registrator\RequestHandlersRegistratorInterface;
+use Swoop\Bundle\RequestBundle\Handler\Processor\RequestHandlersProcessorInterface;
 use Swoop\Bundle\RequestBundle\Registry\RequestHandlersRegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -33,9 +33,9 @@ class RequestBundle extends Bundle
     {
         /** @var RequestHandlersRegistryInterface $requestHandlersRegistry */
         $requestHandlersRegistry = $this->container->get('swoop_request.registry.request_handlers');
-        /** @var RequestHandlersRegistratorInterface $requestHandlersRegistrator */
-        $requestHandlersRegistrator = $this->container->get('swoop_request.handlers_registrator.main');
-        $requestHandlersRegistrator->registerRequestHandlers($requestHandlersRegistry->getHandlers());
+        /** @var RequestHandlersProcessorInterface $requestHandlersProcessor */
+        $requestHandlersProcessor = $this->container->get('swoop_request.handlers_processor.main');
+        $requestHandlersProcessor->registerRequestHandlers($requestHandlersRegistry->getHandlers());
 
         parent::boot();
     }

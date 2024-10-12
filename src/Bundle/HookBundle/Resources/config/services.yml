@@ -3,14 +3,14 @@ services:
     class: Swoop\Bundle\HookBundle\Registry\HooksRegistry
     public: true
 
-  swoop_hook.hooks_registrator.action:
-    class: Swoop\Bundle\HookBundle\Registrator\Chain\Element\ActionHooksRegistratorChainElement
+  swoop_hook.hooks_processor.action:
+    class: Swoop\Bundle\HookBundle\Processor\Chain\Element\ActionHooksProcessorChainElement
     calls:
-      - [setSuccessor, ['@swoop_hook.hooks_registrator.filter']]
+      - [setSuccessor, ['@swoop_hook.hooks_processor.filter']]
 
-  swoop_hook.hooks_registrator.filter:
-    class: Swoop\Bundle\HookBundle\Registrator\Chain\Element\FilterHooksRegistratorChainElement
+  swoop_hook.hooks_processor.filter:
+    class: Swoop\Bundle\HookBundle\Processor\Chain\Element\FilterHooksProcessorChainElement
 
-  swoop_hook.hooks_registrator.main:
-    parent: swoop_hook.hooks_registrator.action
+  swoop_hook.hooks_processor.main:
+    parent: swoop_hook.hooks_processor.action
     public: true

@@ -4,11 +4,11 @@ namespace Swoop\Bundle\RestApiBundle;
 
 use Swoop\Bundle\KernelBundle\Bundle\Bundle;
 use Swoop\Bundle\KernelBundle\DependencyInjection\CompilerPass\KernelCompilerPass;
-use Swoop\Bundle\RestApiBundle\Controller\Registrator\RestApiControllersRegistratorInterface;
+use Swoop\Bundle\RestApiBundle\Controller\Processor\RestApiControllersProcessorInterface;
 use Swoop\Bundle\RestApiBundle\Controller\Registry\RestApiControllersRegistryInterface;
-use Swoop\Bundle\RestApiBundle\Endpoint\Registrator\RestApiEndpointsRegistratorInterface;
+use Swoop\Bundle\RestApiBundle\Endpoint\Processor\RestApiEndpointsProcessorInterface;
 use Swoop\Bundle\RestApiBundle\Endpoint\Registry\RestApiEndpointsRegistryInterface;
-use Swoop\Bundle\RestApiBundle\Field\Registrator\RestApiFieldsRegistratorInterface;
+use Swoop\Bundle\RestApiBundle\Field\Processor\RestApiFieldsProcessorInterface;
 use Swoop\Bundle\RestApiBundle\Field\Registry\RestApiFieldProvidersRegistryInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
@@ -51,21 +51,21 @@ class RestApiBundle extends Bundle
     {
         /** @var RestApiEndpointsRegistryInterface $restEndpointsRegistry */
         $restEndpointsRegistry = $this->container->get('swoop_rest_api.registry.rest_api.endpoints');
-        /** @var RestApiEndpointsRegistratorInterface $restEndpointsRegistrator */
-        $restEndpointsRegistrator = $this->container->get('swoop_rest_api.registrator.rest_api.endpoints');
-        $restEndpointsRegistrator->registerRestEndpoints($restEndpointsRegistry->getEndpoints());
+        /** @var RestApiEndpointsProcessorInterface $restEndpointsProcessor */
+        $restEndpointsProcessor = $this->container->get('swoop_rest_api.processor.rest_api.endpoints');
+        $restEndpointsProcessor->registerRestEndpoints($restEndpointsRegistry->getEndpoints());
 
         /** @var RestApiControllersRegistryInterface $restControllersRegistry */
         $restControllersRegistry = $this->container->get('swoop_rest_api.registry.rest_api.controllers');
-        /** @var RestApiControllersRegistratorInterface $restControllersRegistrator */
-        $restControllersRegistrator = $this->container->get('swoop_rest_api.registrator.rest_api.controllers');
-        $restControllersRegistrator->registerRestControllers($restControllersRegistry->getControllers());
+        /** @var RestApiControllersProcessorInterface $restControllersProcessor */
+        $restControllersProcessor = $this->container->get('swoop_rest_api.processor.rest_api.controllers');
+        $restControllersProcessor->registerRestControllers($restControllersRegistry->getControllers());
 
         /** @var RestApiFieldProvidersRegistryInterface $restFieldProvidersRegistry */
         $restFieldProvidersRegistry = $this->container->get('swoop_rest_api.registry.rest_api.field_providers');
-        /** @var RestApiFieldsRegistratorInterface $restFieldsRegistrator */
-        $restFieldsRegistrator = $this->container->get('swoop_rest_api.registrator.rest_api.fields');
-        $restFieldsRegistrator->registerFields($restFieldProvidersRegistry->getRestApiFieldProviders());
+        /** @var RestApiFieldsProcessorInterface $restFieldsProcessor */
+        $restFieldsProcessor = $this->container->get('swoop_rest_api.processor.rest_api.fields');
+        $restFieldsProcessor->registerFields($restFieldProvidersRegistry->getRestApiFieldProviders());
 
         parent::boot();
     }

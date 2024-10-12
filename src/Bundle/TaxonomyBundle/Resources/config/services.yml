@@ -3,6 +3,6 @@ services:
         class: 'Swoop\Bundle\TaxonomyBundle\Registry\TaxonomiesRegistry'
         public: true
 
-    swoop_taxonomy.registrator.taxonomies:
-        class: 'Swoop\Bundle\TaxonomyBundle\Registrator\TaxonomiesRegistrator'
+    swoop_taxonomy.processor.taxonomies:
+        class: 'Swoop\Bundle\TaxonomyBundle\Processor\TaxonomiesProcessor'
         public: true

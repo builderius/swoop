@@ -3,14 +3,14 @@ services:
         class: 'Swoop\Bundle\RequestBundle\Registry\RequestHandlersRegistry'
         public: true
 
-    swoop_request.handlers_registrator.ajax:
-        class: 'Swoop\Bundle\RequestBundle\Handler\Registrator\Chain\Element\AjaxRequestHandlersRegistratorChainElement'
+    swoop_request.handlers_processor.ajax:
+        class: 'Swoop\Bundle\RequestBundle\Handler\Processor\Chain\Element\AjaxRequestHandlersProcessorChainElement'
         calls:
-            - ['setSuccessor', ['@swoop_request.handlers_registrator.not_ajax']]
+            - ['setSuccessor', ['@swoop_request.handlers_processor.not_ajax']]
 
-    swoop_request.handlers_registrator.not_ajax:
-        class: 'Swoop\Bundle\RequestBundle\Handler\Registrator\Chain\Element\NotAjaxRequestHandlersRegistratorChainElement'
+    swoop_request.handlers_processor.not_ajax:
+        class: 'Swoop\Bundle\RequestBundle\Handler\Processor\Chain\Element\NotAjaxRequestHandlersProcessorChainElement'
 
-    swoop_request.handlers_registrator.main:
-        parent: swoop_request.handlers_registrator.ajax
+    swoop_request.handlers_processor.main:
+        parent: swoop_request.handlers_processor.ajax
         public: true

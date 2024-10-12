@@ -5,10 +5,10 @@ services:
     swoop_media.registry.mime_types:
         class: 'Swoop\Bundle\MediaBundle\Registry\MimeTypesRegistry'
 
-    swoop_media.registrator.image_sizes:
-        class: 'Swoop\Bundle\MediaBundle\Registrator\ImageSizesRegistrator'
+    swoop_media.processor.image_sizes:
+        class: 'Swoop\Bundle\MediaBundle\Processor\ImageSizesProcessor'
         public: true
 
-    swoop_media.registrator.mime_types:
-        class: 'Swoop\Bundle\MediaBundle\Registrator\MimeTypesRegistrator'
+    swoop_media.processor.mime_types:
+        class: 'Swoop\Bundle\MediaBundle\Processor\MimeTypesProcessor'
         public: true

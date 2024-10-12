@@ -53,7 +53,7 @@ class MigrationsExecutionHook extends AbstractHook
     /**
      * @inheritDoc
      */
-    public function getFunction()
+    public function getFunction(...$args)
     {
         if (false === get_transient(self::TRANSIENT)) {
             $migrations = $this->migrationsLoader->getMigrations();

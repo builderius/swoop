@@ -30,76 +30,76 @@ services:
   swoop_asset.path_provider.main:
     parent: swoop_asset.path_provider.uploads
 
-  swoop_asset.registrator.frontend.abstract:
-    class: Swoop\Bundle\AssetBundle\Registrator\Assets\Chain\Element\AbstractAssetsRegistratorChainElement
+  swoop_asset.processor.frontend.abstract:
+    class: Swoop\Bundle\AssetBundle\Processor\Assets\Chain\Element\AbstractAssetsProcessorChainElement
     abstract: true
     arguments:
       - '@swoop_asset.path_provider.main'
       - '@event_dispatcher'
 
-  swoop_asset.registrator.frontend.style:
-    class: Swoop\Bundle\AssetBundle\Registrator\Assets\Chain\Element\StyleAssetsRegistratorChainElement
-    parent: swoop_asset.registrator.frontend.abstract
+  swoop_asset.processor.frontend.style:
+    class: Swoop\Bundle\AssetBundle\Processor\Assets\Chain\Element\StyleAssetsProcessorChainElement
+    parent: swoop_asset.processor.frontend.abstract
 
-  swoop_asset.registrator.frontend.script:
-    class: Swoop\Bundle\AssetBundle\Registrator\Assets\Chain\Element\ScriptAssetsRegistratorChainElement
-    parent: swoop_asset.registrator.frontend.abstract
+  swoop_asset.processor.frontend.script:
+    class: Swoop\Bundle\AssetBundle\Processor\Assets\Chain\Element\ScriptAssetsProcessorChainElement
+    parent: swoop_asset.processor.frontend.abstract
     calls:
-      - [setSuccessor, ['@swoop_asset.registrator.frontend.style']]
+      - [setSuccessor, ['@swoop_asset.processor.frontend.style']]
 
-  swoop_asset.registrator.frontend:
-    parent: swoop_asset.registrator.frontend.script
+  swoop_asset.processor.frontend:
+    parent: swoop_asset.processor.frontend.script
     public: true
 
-  swoop_asset.registrator.admin.abstract:
-    parent: swoop_asset.registrator.frontend.abstract
+  swoop_asset.processor.admin.abstract:
+    parent: swoop_asset.processor.frontend.abstract
     calls:
       - [setRegistrationFunction, ['admin_enqueue_scripts']]
 
-  swoop_asset.registrator.admin.style:
-    class: Swoop\Bundle\AssetBundle\Registrator\Assets\Chain\Element\StyleAssetsRegistratorChainElement
-    parent: swoop_asset.registrator.admin.abstract
+  swoop_asset.processor.admin.style:
+    class: Swoop\Bundle\AssetBundle\Processor\Assets\Chain\Element\StyleAssetsProcessorChainElement
+    parent: swoop_asset.processor.admin.abstract
 
-  swoop_asset.registrator.admin.script:
-    class: Swoop\Bundle\AssetBundle\Registrator\Assets\Chain\Element\ScriptAssetsRegistratorChainElement
-    parent: swoop_asset.registrator.admin.abstract
+  swoop_asset.processor.admin.script:
+    class: Swoop\Bundle\AssetBundle\Processor\Assets\Chain\Element\ScriptAssetsProcessorChainElement
+    parent: swoop_asset.processor.admin.abstract
     calls:
-      - [setSuccessor, ['@swoop_asset.registrator.admin.style']]
+      - [setSuccessor, ['@swoop_asset.processor.admin.style']]
 
-  swoop_asset.registrator.admin:
-    parent: swoop_asset.registrator.admin.script
+  swoop_asset.processor.admin:
+    parent: swoop_asset.processor.admin.script
     public: true
 
-  swoop_asset.registrator.inline_assets.frontend.style:
-    class: Swoop\Bundle\AssetBundle\Registrator\InlineAssets\Chain\Element\FrontendStyleInlineAssetsRegistratorChainElement
+  swoop_asset.processor.inline_assets.frontend.style:
+    class: Swoop\Bundle\AssetBundle\Processor\InlineAssets\Chain\Element\FrontendStyleInlineAssetsProcessorChainElement
     arguments:
       - '@event_dispatcher'
 
-  swoop_asset.registrator.inline_assets.frontend.script:
-    class: Swoop\Bundle\AssetBundle\Registrator\InlineAssets\Chain\Element\FrontendScriptInlineAssetsRegistratorChainElement
+  swoop_asset.processor.inline_assets.frontend.script:
+    class: Swoop\Bundle\AssetBundle\Processor\InlineAssets\Chain\Element\FrontendScriptInlineAssetsProcessorChainElement
     arguments:
       - '@event_dispatcher'
     calls:
-      - [setSuccessor, ['@swoop_asset.registrator.inline_assets.frontend.style']]
+      - [setSuccessor, ['@swoop_asset.processor.inline_assets.frontend.style']]
 
-  swoop_asset.registrator.inline_assets.frontend:
-    parent: swoop_asset.registrator.inline_assets.frontend.script
+  swoop_asset.processor.inline_assets.frontend:
+    parent: swoop_asset.processor.inline_assets.frontend.script
     public: true
 
-  swoop_asset.registrator.inline_assets.admin.style:
-    class: Swoop\Bundle\AssetBundle\Registrator\InlineAssets\Chain\Element\AdminStyleInlineAssetsRegistratorChainElement
+  swoop_asset.processor.inline_assets.admin.style:
+    class: Swoop\Bundle\AssetBundle\Processor\InlineAssets\Chain\Element\AdminStyleInlineAssetsProcessorChainElement
     arguments:
       - '@event_dispatcher'
 
-  swoop_asset.registrator.inline_assets.admin.script:
-    class: Swoop\Bundle\AssetBundle\Registrator\InlineAssets\Chain\Element\AdminScriptInlineAssetsRegistratorChainElement
+  swoop_asset.processor.inline_assets.admin.script:
+    class: Swoop\Bundle\AssetBundle\Processor\InlineAssets\Chain\Element\AdminScriptInlineAssetsProcessorChainElement
     arguments:
       - '@event_dispatcher'
     calls:
-      - [setSuccessor, ['@swoop_asset.registrator.inline_assets.admin.style']]
+      - [setSuccessor, ['@swoop_asset.processor.inline_assets.admin.style']]
 
-  swoop_asset.registrator.inline_assets.admin:
-    parent: swoop_asset.registrator.inline_assets.admin.script
+  swoop_asset.processor.inline_assets.admin:
+    parent: swoop_asset.processor.inline_assets.admin.script
     public: true
 
   swoop_asset.hook.style_loader_tag:

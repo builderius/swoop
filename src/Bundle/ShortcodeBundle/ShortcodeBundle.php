@@ -4,7 +4,7 @@ namespace Swoop\Bundle\ShortcodeBundle;
 
 use Swoop\Bundle\KernelBundle\Bundle\Bundle;
 use Swoop\Bundle\KernelBundle\DependencyInjection\CompilerPass\KernelCompilerPass;
-use Swoop\Bundle\ShortcodeBundle\Registrator\ShortcodesRegistratorInterface;
+use Swoop\Bundle\ShortcodeBundle\Processor\ShortcodesProcessorInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class ShortcodeBundle extends Bundle
@@ -19,7 +19,7 @@ class ShortcodeBundle extends Bundle
         $container->addCompilerPass(
             new KernelCompilerPass(
                 'wp_shortcode',
-                'swoop_shortcode.registrator.shortcodes',
+                'swoop_shortcode.processor.shortcodes',
                 'addShortcode'
             )
         );
@@ -30,9 +30,9 @@ class ShortcodeBundle extends Bundle
      */
     public function boot()
     {
-        /** @var ShortcodesRegistratorInterface $shortcodesRegistrator */
-        $shortcodesRegistrator = $this->container->get('swoop_shortcode.registrator.shortcodes');
-        $shortcodesRegistrator->registerShortcodes();
+        /** @var ShortcodesProcessorInterface $shortcodesProcessor */
+        $shortcodesProcessor = $this->container->get('swoop_shortcode.processor.shortcodes');
+        $shortcodesProcessor->registerShortcodes();
 
         parent::boot();
     }

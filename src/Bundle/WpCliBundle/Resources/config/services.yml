@@ -3,6 +3,6 @@ services:
         class: 'Swoop\Bundle\WpCliBundle\Registry\WpCliCommandsRegistry'
         public: true
 
-    swoop_wpcli.registrator.commands:
-        class: 'Swoop\Bundle\WpCliBundle\Registrator\WpCliCommandsRegistrator'
+    swoop_wpcli.processor.commands:
+        class: 'Swoop\Bundle\WpCliBundle\Processor\WpCliCommandsProcessor'
         public: true

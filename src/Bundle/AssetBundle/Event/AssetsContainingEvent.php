@@ -10,7 +10,7 @@ class AssetsContainingEvent extends Event
     /**
      * @var AssetInterface[]
      */
-    private $assets;
+    private array $assets = [];
 
     /**
      * @param AssetInterface[] $assets

@@ -11,14 +11,14 @@ services:
         class: 'Swoop\Bundle\RestApiBundle\Field\Registry\RestApiFieldProvidersRegistry'
         public: true
 
-    swoop_rest_api.registrator.rest_api.endpoints:
-        class: 'Swoop\Bundle\RestApiBundle\Endpoint\Registrator\RestApiEndpointsRegistrator'
+    swoop_rest_api.processor.rest_api.endpoints:
+        class: 'Swoop\Bundle\RestApiBundle\Endpoint\Processor\RestApiEndpointsProcessor'
         public: true
 
-    swoop_rest_api.registrator.rest_api.controllers:
-        class: 'Swoop\Bundle\RestApiBundle\Controller\Registrator\RestApiControllersRegistrator'
+    swoop_rest_api.processor.rest_api.controllers:
+        class: 'Swoop\Bundle\RestApiBundle\Controller\Processor\RestApiControllersProcessor'
         public: true
 
-    swoop_rest_api.registrator.rest_api.fields:
-        class: 'Swoop\Bundle\RestApiBundle\Field\Registrator\RestApiFieldsRegistrator'
+    swoop_rest_api.processor.rest_api.fields:
+        class: 'Swoop\Bundle\RestApiBundle\Field\Processor\RestApiFieldsProcessor'
         public: true
