@@ -8,19 +8,9 @@ interface InlineAssetsProcessorChainElementInterface
 {
     const ASSETS_TYPES = ['script', 'style'];
 
-    /**
-     * @param string $assetType
-     * @return bool
-     */
-    public function isApplicable($assetType);
+    public function isApplicable(string $assetType): bool;
 
-    /**
-     * @param InlineAssetInterface $asset
-     */
-    public function enqueueDependency(InlineAssetInterface $asset);
+    public function enqueueDependency(InlineAssetInterface $asset): void;
 
-    /**
-     * @param InlineAssetInterface $asset
-     */
-    public function registerAsset(InlineAssetInterface $asset);
+    public function registerAsset(InlineAssetInterface $asset): void;
 }

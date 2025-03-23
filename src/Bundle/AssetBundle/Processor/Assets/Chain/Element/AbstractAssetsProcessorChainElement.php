@@ -3,58 +3,40 @@
 namespace Swoop\Bundle\AssetBundle\Processor\Assets\Chain\Element;
 
 use Swoop\Bundle\AssetBundle\Event\AssetsContainingEvent;
-use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Swoop\Bundle\AssetBundle\Model\AssetInterface;
 use Swoop\Bundle\AssetBundle\Path\AssetPathProviderInterface;
 use Swoop\Bundle\AssetBundle\Processor\Assets\AssetsProcessorInterface;
 use Swoop\Bundle\ConditionBundle\Model\ConditionAwareInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractAssetsProcessorChainElement implements
     AssetsProcessorInterface,
     AssetsProcessorChainElementInterface
 {
-    /**
-     * @var AssetPathProviderInterface
-     */
-    protected $pathProvider;
-
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
-
-    /**
-     * @var string
-     */
-    protected $registrationFunction = 'wp_enqueue_scripts';
-
-    /**
-     * @var AssetsProcessorChainElementInterface|null
-     */
-    private $successor;
+    protected string $registrationFunction = 'wp_enqueue_scripts';
+    private ?AssetsProcessorChainElementInterface $successor;
 
     /**
      * @param AssetPathProviderInterface $pathProvider
      * @param EventDispatcherInterface $eventDispatcher
      */
-    public function __construct(AssetPathProviderInterface $pathProvider, EventDispatcherInterface $eventDispatcher)
-    {
-        $this->pathProvider = $pathProvider;
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(
+        protected AssetPathProviderInterface $pathProvider,
+        protected EventDispatcherInterface $eventDispatcher
+    ) {
     }
 
-    /**
-     * @param string $registrationFunction
-     */
-    public function setRegistrationFunction($registrationFunction)
+    public function setRegistrationFunction(string $registrationFunction): static
     {
         $this->registrationFunction = $registrationFunction;
+
+        return $this;
     }
 
     /**
      * @inheritDoc
      */
-    public function registerAssets(array $assets)
+    public function registerAssets(array $assets): void
     {
         add_action(
             $this->registrationFunction,
@@ -83,10 +65,7 @@ abstract class AbstractAssetsProcessorChainElement implements
         );
     }
 
-    /**
-     * @param AssetInterface $asset
-     */
-    public function registerAsset(AssetInterface $asset)
+    public function registerAsset(AssetInterface $asset): void
     {
         if ($this->isApplicable($asset)) {
             $this->register($asset);
@@ -95,18 +74,14 @@ abstract class AbstractAssetsProcessorChainElement implements
         }
     }
 
-    /**
-     * @param AssetsProcessorChainElementInterface $assetProcessor
-     */
-    public function setSuccessor(AssetsProcessorChainElementInterface $assetProcessor)
+    public function setSuccessor(AssetsProcessorChainElementInterface $assetProcessor): static
     {
         $this->successor = $assetProcessor;
+
+        return $this;
     }
 
-    /**
-     * @return AssetsProcessorChainElementInterface|null
-     */
-    protected function getSuccessor()
+    protected function getSuccessor(): ?AssetsProcessorChainElementInterface
     {
         return $this->successor;
     }

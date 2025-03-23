@@ -4,6 +4,7 @@ namespace Swoop\Bundle\AssetBundle\Processor\InlineAssets\Chain\Element;
 
 use Swoop\Bundle\AssetBundle\Event\InlineAssetsContainingEvent;
 use Swoop\Bundle\AssetBundle\Formatter\HtmlAttributesFormatter;
+use Swoop\Bundle\AssetBundle\Model\InlineAssetInterface;
 use Swoop\Bundle\AssetBundle\Processor\InlineAssets\InlineAssetsProcessorInterface;
 use Swoop\Bundle\ConditionBundle\Model\ConditionAwareInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -12,38 +13,18 @@ abstract class AbstractInlineAssetsProcessorChainElement implements
     InlineAssetsProcessorInterface,
     InlineAssetsProcessorChainElementInterface
 {
-    /**
-     * @var EventDispatcherInterface
-     */
-    protected $eventDispatcher;
+    protected ?string $assetRegistrationFunction = null;
+    protected ?string $registrationFunction = null;
+    private ?InlineAssetsProcessorChainElementInterface $successor;
 
-    /**
-     * @var string
-     */
-    protected $assetRegistrationFunction = null;
-
-    /**
-     * @var string
-     */
-    protected $registrationFunction = null;
-
-    /**
-     * @var InlineAssetsProcessorChainElementInterface|null
-     */
-    private $successor;
-
-    /**
-     * @param EventDispatcherInterface $eventDispatcher
-     */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(protected EventDispatcherInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     /**
      * @inheritDoc
      */
-    public function registerAssets(array $assets)
+    public function registerAssets(array $assets): void
     {
         add_action($this->registrationFunction, function () use ($assets) {
             $event = new InlineAssetsContainingEvent($assets);
@@ -86,10 +67,10 @@ abstract class AbstractInlineAssetsProcessorChainElement implements
     }
 
     /**
-     * @param $type
-     * @param $assets
+     * @param string $type
+     * @param InlineAssetInterface[] $assets
      */
-    public function registerAssetsByType($type, $assets)
+    public function registerAssetsByType(string $type, array $assets): void
     {
         if ($this->isApplicable($type)) {
             add_action(
@@ -122,11 +103,7 @@ abstract class AbstractInlineAssetsProcessorChainElement implements
         }
     }
 
-    /**
-     * @param array $htmlAttributes
-     * @return string
-     */
-    protected function generateHtmlAttributes(array $htmlAttributes)
+    protected function generateHtmlAttributes(array $htmlAttributes): string
     {
         $formattedAttributes = [];
         foreach ($htmlAttributes as $key => $value) {
@@ -139,18 +116,14 @@ abstract class AbstractInlineAssetsProcessorChainElement implements
         return '';
     }
 
-    /**
-     * @param InlineAssetsProcessorChainElementInterface $assetProcessor
-     */
-    public function setSuccessor(InlineAssetsProcessorChainElementInterface $assetProcessor)
+    public function setSuccessor(InlineAssetsProcessorChainElementInterface $assetProcessor): static
     {
         $this->successor = $assetProcessor;
+
+        return $this;
     }
 
-    /**
-     * @return InlineAssetsProcessorChainElementInterface|null
-     */
-    protected function getSuccessor()
+    protected function getSuccessor(): ?InlineAssetsProcessorChainElementInterface
     {
         return $this->successor;
     }

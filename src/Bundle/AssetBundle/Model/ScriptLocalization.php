@@ -9,28 +9,26 @@ class ScriptLocalization extends ParameterBag implements ScriptLocalizationInter
     const OBJECT_NAME_FIELD = 'object_name';
     const PROPERTY_NAME_FIELD = 'property_name';
     const PROPERTY_DATA_FIELD = 'property_data';
+    const SORT_ORDER_FIELD = 'sort_order';
 
-    /**
-     * @inheritDoc
-     */
-    public function getObjectName()
+    public function getObjectName(): string
     {
         return $this->get(self::OBJECT_NAME_FIELD);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getPropertyName()
+    public function getPropertyName(): string
     {
         return $this->get(self::PROPERTY_NAME_FIELD);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getPropertyData()
+    public function getPropertyData(): mixed
     {
         return $this->get(self::PROPERTY_DATA_FIELD);
+    }
+
+
+    public function getSortOrder(): int
+    {
+        return $this->get(self::SORT_ORDER_FIELD);
     }
 }

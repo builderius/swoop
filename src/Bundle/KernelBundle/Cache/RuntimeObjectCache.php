@@ -6,49 +6,36 @@ class RuntimeObjectCache
 {
     /**
      * Holds the cached objects.
-     *
-     * @var array
      */
-    private $cache = array();
+    private array $cache = array();
 
     /**
      * The amount of times the cache data was already stored in the cache.
-     *
-     * @var int
      */
-    public $cache_hits = 0;
+    public int $cache_hits = 0;
 
     /**
      * Amount of times the cache did not have the request in cache.
-     *
-     * @var int
      */
-    public $cache_misses = 0;
+    public int $cache_misses = 0;
 
     /**
      * List of global cache groups.
-     *
-     * @var array
      */
-    protected $global_groups = array();
+    protected array $global_groups = array();
 
     /**
      * The blog prefix to prepend to keys in non-global groups.
-     *
-     * @var string
      */
-    private $blog_prefix;
+    private string $blog_prefix;
 
     /**
      * Holds the value of is_multisite().
-     *
-     * @var bool
      */
-    private $multisite;
+    private bool $multisite;
 
     /**
      * Sets up object properties; PHP 5 style constructor.
-     *
      */
     public function __construct()
     {
@@ -71,7 +58,7 @@ class RuntimeObjectCache
      *
      * @uses WP_Object_Cache::_exists() Checks to see if the cache already has data.
      */
-    public function add($key, $data, $group = 'default', $expire = 0)
+    public function add(int|string $key, mixed $data, string $group = 'default', int $expire = 0): bool
     {
         if (wp_suspend_cache_addition()) {
             return false;
@@ -102,7 +89,7 @@ class RuntimeObjectCache
      * @param string $group Optional. Where the cache contents are grouped. Default 'default'.
      * @return bool False if the contents weren't deleted and true on success.
      */
-    public function delete($key, $group = 'default')
+    public function delete(int|string $key, string $group = 'default'): bool
     {
         if (empty($group)) {
             $group = 'default';
@@ -125,7 +112,7 @@ class RuntimeObjectCache
      *
      * @return true Always returns true.
      */
-    public function flush()
+    public function flush(): bool
     {
         $this->cache = array();
 
@@ -145,11 +132,11 @@ class RuntimeObjectCache
      * @param string $group Optional. Where the cache contents are grouped. Default 'default'.
      * @param bool $force Optional. Unused. Whether to force an update of the local cache
      *                          from the persistent cache. Default false.
-     * @param bool $found Optional. Whether the key was found in the cache (passed by reference).
+     * @param bool|null $found Optional. Whether the key was found in the cache (passed by reference).
      *                          Disambiguates a return of false, a storable value. Default null.
      * @return mixed|false The cache contents on success, false on failure to retrieve contents.
      */
-    public function get($key, $group = 'default', $force = false, &$found = null)
+    public function get(int|string $key, string $group = 'default', bool $force = false, bool &$found = null): mixed
     {
         if (empty($group)) {
             $group = 'default';
@@ -184,7 +171,7 @@ class RuntimeObjectCache
      *                      from the persistent cache. Default false.
      * @return array Array of values organized into groups.
      */
-    public function get_multiple($keys, $group = 'default', $force = false)
+    public function get_multiple(array $keys, string $group = 'default', bool $force = false): array
     {
         $values = array();
 
@@ -206,7 +193,7 @@ class RuntimeObjectCache
      * @see WP_Object_Cache::set()
      *
      */
-    public function replace($key, $data, $group = 'default', $expire = 0)
+    public function replace(int|string $key, mixed $data, string $group = 'default', int $expire = 0): bool
     {
         if (empty($group)) {
             $group = 'default';
@@ -241,7 +228,7 @@ class RuntimeObjectCache
      * @param string $group Optional. Where to group the cache contents. Default 'default'.
      * @return true Always returns true.
      */
-    public function set($key, $data, $group = 'default')
+    public function set(int|string $key, mixed $data, string $group = 'default'): bool
     {
         if (empty($group)) {
             $group = 'default';
@@ -267,7 +254,7 @@ class RuntimeObjectCache
      * @return bool Whether the key exists in the cache for the given group.
      *
      */
-    protected function _exists($key, $group)
+    protected function _exists(int|string $key, string $group): bool
     {
         return isset($this->cache[$group]) && (isset($this->cache[$group][$key]) || array_key_exists($key, $this->cache[$group]));
     }

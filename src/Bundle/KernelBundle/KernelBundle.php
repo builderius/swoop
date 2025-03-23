@@ -11,10 +11,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class KernelBundle extends Bundle
 {
-    /**
-     * @inheritDoc
-     */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
@@ -41,10 +38,7 @@ class KernelBundle extends Bundle
         );
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function boot()
+    public function boot(): void
     {
         /** @var BootServiceInterface $compositeBoot */
         $compositeBoot = $this->container->get('swoop_kernel.boot_service.composite');

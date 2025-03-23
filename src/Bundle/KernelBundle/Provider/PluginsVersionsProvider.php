@@ -4,28 +4,13 @@ namespace Swoop\Bundle\KernelBundle\Provider;
 
 class PluginsVersionsProvider
 {
-    /**
-     * @var array
-     */
-    private $plugins = [];
+    private array $pluginsVersions = [];
 
-    /**
-     * @var array
-     */
-    private $pluginsVersions = [];
-
-    /**
-     * @param array $plugins
-     */
-    public function __construct(array $plugins)
+    public function __construct(private array $plugins)
     {
-        $this->plugins = $plugins;
     }
 
-    /**
-     * @return array
-     */
-    public function getPluginsVersions()
+    public function getPluginsVersions(): array
     {
         if (empty($this->pluginsVersions)) {
             if (!function_exists('get_plugin_data')) {
@@ -43,11 +28,7 @@ class PluginsVersionsProvider
         return $this->pluginsVersions;
     }
 
-    /**
-     * @param $plugin
-     * @return string|null
-     */
-    public function getPluginVersion($plugin)
+    public function getPluginVersion(string $plugin): ?string
     {
         $pluginsVersions = $this->getPluginsVersions();
         if (isset($pluginsVersions[$plugin])) {

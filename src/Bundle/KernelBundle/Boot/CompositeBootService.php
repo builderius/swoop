@@ -11,20 +11,16 @@ class CompositeBootService implements BootServiceInterface
     /**
      * @var BootServiceInterface[]
      */
-    private $services =[];
+    private array $services = [];
 
-    /**
-     * @param BootServiceInterface $service
-     */
-    public function addService(BootServiceInterface $service)
+    public function addService(BootServiceInterface $service): static
     {
         $this->services[] = $service;
+
+        return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function boot(ContainerInterface $container)
+    public function boot(ContainerInterface $container): void
     {
         foreach ($this->services as $service) {
             $service->boot($container);

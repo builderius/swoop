@@ -6,10 +6,7 @@ use Swoop\Bundle\AssetBundle\Formatter\HtmlAttributesFormatter;
 use Swoop\Bundle\HookBundle\Model\AbstractFilter;
 class StyleLoaderTagFilter extends AbstractFilter
 {
-    /**
-     * @inheritDoc
-     */
-    public function getFunction(...$args)
+    public function getFunction(...$args): mixed
     {
         $tag = $args[0];
         $handle = $args[1];

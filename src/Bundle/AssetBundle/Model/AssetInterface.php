@@ -7,44 +7,17 @@ interface AssetInterface
     const FRONTEND_CATEGORY = 'frontend';
     const ADMIN_CATEGORY = 'admin';
 
-    /**
-     * @return bool
-     */
-    public function registerOnly();
-
-    /**
-     * @return string
-     */
-    public function getHandle();
-
-    /**
-     * @return string
-     */
-    public function getSource();
-
-    /**
-     * @return array
-     */
-    public function getDependencies();
-
-    /**
-     * @return string
-     */
-    public function getVersion();
-
-    /**
-     * @return string
-     */
-    public function getCategory();
+    public function registerOnly(): bool;
+    public function getHandle(): string;
+    public function getSource(): string;
+    public function getDependencies(): array;
+    public function getVersion(): string;
+    public function getCategory(): string;
 
     /**
      * @return AssetDataItemInterface[]
      */
-    public function getAssetData();
+    public function getAssetData(): array;
 
-    /**
-     * @param AssetDataItemInterface $dataItem
-     * @return $this
-     */
-    public function addAssetDataItem(AssetDataItemInterface $dataItem);
+    public function addAssetDataItem(AssetDataItemInterface $dataItem): static;
 }

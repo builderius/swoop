@@ -14,13 +14,10 @@ use Twig\Template;
 
 class TwigEngine implements EngineInterface, StreamingEngineInterface
 {
-    protected $environment;
-    protected $parser;
-
-    public function __construct(Environment $environment, TemplateNameParserInterface $parser)
-    {
-        $this->environment = $environment;
-        $this->parser = $parser;
+    public function __construct(
+        protected Environment $environment,
+        protected TemplateNameParserInterface $parser
+    ) {
     }
 
     /**

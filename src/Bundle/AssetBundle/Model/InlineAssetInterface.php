@@ -7,80 +7,34 @@ interface InlineAssetInterface
     const FRONTEND_CATEGORY = 'frontend';
     const ADMIN_CATEGORY = 'admin';
 
-    /**
-     * @return string
-     */
-    public function getType();
+    public function getType(): string;
 
-    /**
-     * @param string $type
-     * @return $this
-     */
-    public function setType($type);
+    public function setType(string $type): static;
 
-    /**
-     * @return string
-     */
-    public function getTagType();
+    public function getTagType(): string;
 
-    /**
-     * @param string $tagType
-     * @return $this
-     */
-    public function setTagType($tagType);
+    public function setTagType(string $tagType): static;
 
-    /**
-     * @return string
-     */
-    public function getContent();
+    public function getContent(): string;
 
-    /**
-     * @param string $content
-     * @return $this
-     */
-    public function setContent($content);
+    public function setContent(string $content): static;
 
-    /**
-     * @return string|null
-     */
-    public function getId();
+    public function getId(): ?string;
 
-    /**
-     * @param string $id
-     * @return $this
-     */
-    public function setId($id);
+    public function setId(string $id): static;
 
-    /**
-     * @return string
-     */
-    public function getCategory();
+    public function getCategory(): string;
 
-    /**
-     * @param string $category
-     * @return $this
-     */
-    public function setCategory($category);
+    public function setCategory(string $category): static;
 
-    /**
-     * @return array
-     */
-    public function getDependencies();
+    public function getDependencies(): array;
 
-    /**
-     * @param array $dependencies
-     * @return $this
-     */
-    public function setDependencies(array $dependencies);
+    public function setDependencies(array $dependencies): static;
 
     /**
      * @return AssetDataItemInterface[]
      */
-    public function getAssetData();
+    public function getAssetData(): array;
 
-    /**
-     * @param AssetDataItemInterface $dataItem
-     * @return $this
-     */
-    public function addAssetDataItem(AssetDataItemInterface $dataItem);
+    public function addAssetDataItem(AssetDataItemInterface $dataItem): static;
 }

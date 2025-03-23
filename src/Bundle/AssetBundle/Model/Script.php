@@ -7,10 +7,7 @@ class Script extends AbstractAsset implements ScriptInterface
     const IN_FOOTER_FIELD = 'inFooter';
     const LOCALIZATIONS = 'localizations';
 
-    /**
-     * @inheritDoc
-     */
-    public function isInFooter()
+    public function isInFooter(): ?bool
     {
         return $this->get(self::IN_FOOTER_FIELD, false);
     }
@@ -18,7 +15,7 @@ class Script extends AbstractAsset implements ScriptInterface
     /**
      * @inheritDoc
      */
-    public function getLocalizations()
+    public function getLocalizations(): array
     {
         $localizations = $this->get(self::LOCALIZATIONS, []);
         usort($localizations, function (ScriptLocalizationInterface $a, ScriptLocalizationInterface $b) {
@@ -33,10 +30,8 @@ class Script extends AbstractAsset implements ScriptInterface
 
         return $localizations;
     }
-    /**
-     * @inheritDoc
-     */
-    public function addLocalization(ScriptLocalizationInterface $localization)
+
+    public function addLocalization(ScriptLocalizationInterface $localization): static
     {
         $localizations = $this->getLocalizations();
         if (!in_array($localization, $localizations)) {

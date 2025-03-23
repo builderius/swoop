@@ -7,8 +7,7 @@ use Swoop\Bundle\AssetBundle\Model\AssetInterface;
 interface AssetsRegistryInterface
 {
     /**
-     * @param string $category
      * @return AssetInterface[]
      */
-    public function getAssets($category);
+    public function getAssets(string $category): array;
 }

@@ -10,23 +10,14 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class BundleAssetPathProvider extends AbstractAssetPathProviderChainElement
 {
-    /**
-     * @var array
-     */
-    private $bundles = [];
+    private array $bundles = [];
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->bundles = $container->get('kernel')->getBundles();
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getAssetPath(AssetInterface $asset)
+    public function getAssetPath(AssetInterface $asset): ?string
     {
         $subFolder = null;
         if ($asset instanceof ScriptInterface) {

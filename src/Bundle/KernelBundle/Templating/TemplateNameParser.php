@@ -10,14 +10,8 @@ use Symfony\Component\Templating\TemplateReferenceInterface;
 
 class TemplateNameParser implements TemplateNameParserInterface
 {
-    /**
-     * @var Kernel
-     */
-    private $kernel;
+    private ?Kernel $kernel;
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->kernel = $container->get('kernel');

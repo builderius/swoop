@@ -8,12 +8,8 @@ interface AssetsProcessorInterface
 {
     /**
      * @param AssetInterface[] $assets
-     * @return mixed
      */
-    public function registerAssets(array $assets);
+    public function registerAssets(array $assets): void;
 
-    /**
-     * @param AssetInterface $asset
-     */
-    public function registerAsset(AssetInterface $asset);
+    public function registerAsset(AssetInterface $asset): void;
 }

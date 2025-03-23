@@ -6,23 +6,16 @@ use Swoop\Bundle\AssetBundle\Path\AssetPathProviderInterface;
 
 abstract class AbstractAssetPathProviderChainElement implements AssetPathProviderInterface
 {
-    /**
-     * @var AssetPathProviderInterface|null
-     */
-    private $successor;
+    private ?AssetPathProviderInterface $successor;
 
-    /**
-     * @param AssetPathProviderInterface $pathProvider
-     */
-    public function setSuccessor(AssetPathProviderInterface $pathProvider)
+    public function setSuccessor(AssetPathProviderInterface $pathProvider): static
     {
         $this->successor = $pathProvider;
+
+        return $this;
     }
 
-    /**
-     * @return AssetPathProviderInterface|null
-     */
-    protected function getSuccessor()
+    protected function getSuccessor(): ?AssetPathProviderInterface
     {
         return $this->successor;
     }

@@ -10,25 +10,17 @@ class PluginNameForClassProvider
     /**
      * @var BundleInterface[]
      */
-    private $bundles;
+    private array $bundles;
 
-    /**
-     * @param ContainerInterface $container
-     */
     public function __construct(ContainerInterface $container)
     {
         $this->bundles = $container->get('kernel')->getBundles();
     }
 
-    /**
-     * @param string $class
-     * @param bool $full
-     * @return string
-     */
-    public function getPluginName($class, $full = true)
+    public function getPluginName(string $class, bool $full = true): ?string
     {
        foreach ($this->bundles as $name => $bundle) {
-            if (strpos($class, $bundle->getNamespace()) !== false) {
+            if (str_contains($class, $bundle->getNamespace())) {
                 if ($full === false) {
                     return explode('/', $bundle->getPluginName())[0];
                 }

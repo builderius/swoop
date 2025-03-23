@@ -4,25 +4,17 @@ namespace Swoop\Bundle\AssetBundle\Model;
 
 interface AssetAwareInterface
 {
-    /**
-     * @return bool
-     */
-    public function hasAssets();
+    public function hasAssets(): bool;
 
     /**
      * @return AssetInterface[]
      */
-    public function getAssets();
+    public function getAssets(): array;
 
-    /**
-     * @param AssetInterface $asset
-     * @return $this
-     */
-    public function addAsset(AssetInterface $asset);
+    public function addAsset(AssetInterface $asset): static;
 
     /**
      * @param AssetInterface[] $assets
-     * @return $this
      */
-    public function setAssets(array $assets);
+    public function setAssets(array $assets): static;
 }

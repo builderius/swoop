@@ -12,15 +12,12 @@ class ScriptLocalizationsCompilerPass implements CompilerPassInterface
     const LOCALIZATION_TAG = 'wp_script_localization';
     const ASSET_TAG = 'wp_asset';
 
-    /**
-     * @var array
-     */
-    private $assets;
+    private array $assets;
 
     /**
      * @inheritDoc
      */
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $assets = $container->findTaggedServiceIds(self::ASSET_TAG);
         if (!$assets) {

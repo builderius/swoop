@@ -6,10 +6,7 @@ class Style extends AbstractAsset implements StyleInterface
 {
     const MEDIA_FIELD = 'media';
 
-    /**
-     * @inheritDoc
-     */
-    public function getMedia()
+    public function getMedia(): ?string
     {
         return $this->get(self::MEDIA_FIELD, 'all');
     }

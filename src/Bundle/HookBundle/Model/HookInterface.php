@@ -7,38 +7,11 @@ interface HookInterface
     const ACTION_TYPE = 'action';
     const FILTER_TYPE = 'filter';
 
-    /**
-     * @return string|null
-     */
-    public function getInitHookName();
-
-    /**
-     * @return int
-     */
-    public function getInitHookPriority();
-
-    /**
-     * @return string
-     */
-    public function getType();
-
-    /**
-     * @return string
-     */
-    public function getTag();
-
-    /**
-     * @return int
-     */
-    public function getPriority();
-
-    /**
-     * @return int
-     */
-    public function getAcceptedArgs();
-
-    /**
-     * @return mixed
-     */
-    public function getFunction(...$args);
+    public function getInitHookName(): ?string;
+    public function getInitHookPriority(): int;
+    public function getType(): string;
+    public function getTag(): string;
+    public function getPriority(): int;
+    public function getAcceptedArgs(): int;
+    public function getFunction(...$args): mixed;
 }

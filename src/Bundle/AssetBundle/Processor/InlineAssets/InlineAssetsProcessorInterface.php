@@ -9,5 +9,5 @@ interface InlineAssetsProcessorInterface
     /**
      * @param InlineAssetInterface[] $assets
      */
-    public function registerAssets(array $assets);
+    public function registerAssets(array $assets): void;
 }

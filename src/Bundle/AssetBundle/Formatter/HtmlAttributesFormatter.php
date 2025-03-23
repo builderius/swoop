@@ -4,12 +4,7 @@ namespace Swoop\Bundle\AssetBundle\Formatter;
 
 class HtmlAttributesFormatter
 {
-    /**
-     * @param string $key
-     * @param string $value
-     * @return string
-     */
-    public static function format($key, $value)
+    public static function format(string $key, string $value = null): string
     {
         if ($value !== null) {
             return sprintf("%s=\"%s\"", $key, self::escape($value));
@@ -18,11 +13,7 @@ class HtmlAttributesFormatter
         }
     }
 
-    /**
-     * @param string $value
-     * @return string
-     */
-    private static function escape($value)
+    private static function escape(string $value): string
     {
         return esc_html(
             str_replace(

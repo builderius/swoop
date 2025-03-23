@@ -10,7 +10,6 @@ interface InlineAssetFactoryInterface
     /**
      * @param array $arguments
      * @param ConditionInterface[] $conditions
-     * @return InlineAssetInterface
      */
-    public static function create(array $arguments, array $conditions = []);
+    public static function create(array $arguments, array $conditions = []): InlineAssetInterface;
 }

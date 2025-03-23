@@ -23,16 +23,15 @@ class InlineAssetsContainingEvent extends Event
     /**
      * @return InlineAssetInterface[]
      */
-    public function getAssets()
+    public function getAssets(): array
     {
         return $this->assets;
     }
 
     /**
      * @param InlineAssetInterface[] $assets
-     * @return $this
      */
-    public function setAssets(array $assets)
+    public function setAssets(array $assets): static
     {
         $this->assets = $assets;
 

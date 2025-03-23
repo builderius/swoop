@@ -16,57 +16,21 @@ use Symfony\Component\Yaml\Yaml;
 
 class Kernel
 {
-    /**
-     * @var bool
-     */
-    protected $debug;
-
-    /**
-     * @var array
-     */
-    private static $freshCache = [];
-
-    /**
-     * @var string
-     */
-    protected $pluginBaseName;
-
-    /**
-     * @var string
-     */
-    protected $pluginName;
-
-    /**
-     * @var array
-     */
-    protected $rootDirs = [];
-
-    /**
-     * @var ContainerInterface
-     */
-    protected $container;
+    private static array $freshCache = [];
+    protected string $pluginBaseName;
+    protected string $pluginName;
+    protected array $rootDirs = [];
+    protected ContainerInterface $container;
 
     /**
      * @var BundleInterface[]
      */
-    protected $bundles = [];
+    protected array $bundles = [];
+    protected array $plugins = [];
+    protected bool $booted = false;
 
-    /**
-     * @var array
-     */
-    protected $plugins = [];
-
-    /**
-     * @var bool
-     */
-    protected $booted = false;
-
-    /**
-     * @param false $debug
-     */
-    public function __construct($debug = false)
+    public function __construct(protected bool $debug = false)
     {
-        $this->debug = $debug;
         $pluginRootFile =debug_backtrace(2, 3)[0]['file'];
         $this->pluginBaseName = plugin_basename($pluginRootFile);
         $this->pluginName = explode('/', $this->pluginBaseName)[0];
@@ -76,23 +40,17 @@ class Kernel
         $this->rootDirs[$this->pluginBaseName][] = realpath(dirname($r->getFileName(), 3) . '/../..');
     }
 
-    /**
-     * @return string
-     */
-    public function getPluginName()
+    public function getPluginName(): string
     {
         return $this->pluginName;
     }
 
-    /**
-     * @return array
-     */
-    public function getRootDirs()
+    public function getRootDirs(): array
     {
         return apply_filters(sprintf('%s_add_root_dir', $this->pluginName), $this->rootDirs);
     }
 
-    public function registerBundles()
+    public function registerBundles(): void
     {
         foreach ($this->collectBundles() as $class => $params) {
             if (!in_array($params['plugin'], $this->plugins)) {
@@ -104,10 +62,7 @@ class Kernel
         }
     }
 
-    /**
-     * @return array
-     */
-    public function collectBundles()
+    public function collectBundles(): array
     {
         $files = $this->findBundles($this->getRootDirs());
 
@@ -127,13 +82,7 @@ class Kernel
         return $bundles;
     }
 
-    /**
-     * @param array $a
-     * @param array $b
-     *
-     * @return int
-     */
-    public function compareBundles($a, $b)
+    public function compareBundles(array $a, array $b): int
     {
         $p1 = (int)$a['priority'];
         $p2 = (int)$b['priority'];
@@ -148,12 +97,8 @@ class Kernel
 
     /**
      * Finds all .../Resource/config/bundles.yml in given root folders
-     *
-     * @param array $roots
-     *
-     * @return array
      */
-    protected function findBundles($roots = [])
+    protected function findBundles(array $roots = []): array
     {
         $paths = [];
         foreach ($roots as $plugin => $pluginRoots) {
@@ -197,13 +142,7 @@ class Kernel
         return $paths;
     }
 
-    /**
-     * @param array $bundles
-     * @param string $plugin
-     *
-     * @return array
-     */
-    protected function getBundlesMapping(array $bundles, $plugin)
+    protected function getBundlesMapping(array $bundles, string $plugin): array
     {
         $result = [];
         foreach ($bundles as $bundle) {
@@ -226,18 +165,12 @@ class Kernel
         return $result;
     }
 
-    /**
-     * @return array
-     */
-    public function getBundles()
+    public function getBundles(): array
     {
         return $this->bundles;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getBundle($name)
+    public function getBundle($name): BundleInterface
     {
         if (!isset($this->bundles[$name])) {
             throw new \InvalidArgumentException(
@@ -255,18 +188,13 @@ class Kernel
 
     /**
      * Gets a new ContainerBuilder instance used to build the service container.
-     *
-     * @return ContainerBuilder
      */
-    protected function getContainerBuilder()
+    protected function getContainerBuilder(): ContainerBuilder
     {
         return new ContainerBuilder();
     }
 
-    /**
-     * @return ContainerBuilder
-     */
-    protected function buildContainer()
+    protected function buildContainer(): ContainerBuilder
     {
         $container = $this->getContainerBuilder();
 
@@ -292,10 +220,8 @@ class Kernel
      * Gets the container's base class.
      *
      * All names except Container must be fully qualified.
-     *
-     * @return string
      */
-    protected function getContainerBaseClass()
+    protected function getContainerBaseClass(): string
     {
         return 'Container';
     }
@@ -306,7 +232,7 @@ class Kernel
      * The cached version of the service container is used when fresh, otherwise the
      * container is built.
      */
-    protected function initializeContainer()
+    protected function initializeContainer(): void
     {
         $cacheValidForPluginsVersions = false;
         $prefix = strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', explode('\\', get_class($this)))[0]);
@@ -470,10 +396,7 @@ class Kernel
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    protected function dumpContainer(ConfigCache $cache, ContainerBuilder $container, $class, $baseClass)
+    protected function dumpContainer(ConfigCache $cache, ContainerBuilder $container, $class, $baseClass): void
     {
         // cache the container
         $dumper = new PhpDumper($container);
@@ -518,10 +441,7 @@ class Kernel
         }
     }
 
-    /**
-     * @return ContainerInterface
-     */
-    public function getContainer()
+    public function getContainer(): ContainerInterface
     {
         return $this->container;
     }
@@ -529,7 +449,7 @@ class Kernel
     /**
      * Boots the current kernel.
      */
-    public function boot()
+    public function boot(): void
     {
         if (true === $this->booted) {
             return;

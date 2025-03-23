@@ -9,18 +9,12 @@ use Swoop\Bundle\ConditionBundle\Model\ConditionAwareInterface;
 
 class ScriptAssetsProcessorChainElement extends AbstractAssetsProcessorChainElement
 {
-    /**
-     * @inheritDoc
-     */
-    public function isApplicable(AssetInterface $asset)
+    public function isApplicable(AssetInterface $asset): bool
     {
         return $asset instanceof ScriptInterface;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function register(AssetInterface $asset)
+    public function register(AssetInterface $asset): void
     {
         /** @var ScriptInterface $asset */
         if ($asset->registerOnly()) {
@@ -59,12 +53,10 @@ class ScriptAssetsProcessorChainElement extends AbstractAssetsProcessorChainElem
 
     /**
      * @param ScriptLocalizationInterface[] $localizations
-     * @return array
      */
-    private function transformLocalizations(array $localizations)
+    private function transformLocalizations(array $localizations): array
     {
         $params = [];
-        /** @var ScriptLocalizationInterface $localization */
         foreach ($localizations as $localization) {
             if ($localization instanceof ConditionAwareInterface && $localization->hasConditions()) {
                 $evaluated = true;
@@ -77,12 +69,9 @@ class ScriptAssetsProcessorChainElement extends AbstractAssetsProcessorChainElem
                 if (!$evaluated) {
                     continue;
                 }
-                $params[$localization->getObjectName()][$localization->getPropertyName()] =
-                    $localization->getPropertyData();
-            } else {
-                $params[$localization->getObjectName()][$localization->getPropertyName()] =
-                    $localization->getPropertyData();
             }
+            $params[$localization->getObjectName()][$localization->getPropertyName()] =
+                $localization->getPropertyData();
         }
 
         return $params;

@@ -11,64 +11,28 @@ abstract class Bundle implements BundleInterface
 {
     use ContainerAwareTrait;
 
-    /**
-     * @var string
-     */
-    protected $name;
+    protected string $name;
+    protected ExtensionInterface $extension;
+    protected string $path;
+    private string $namespace;
 
-    /**
-     * @var ExtensionInterface
-     */
-    protected $extension;
-
-    /**
-     * @var string
-     */
-    protected $path;
-    
-    /**
-     * @var string
-     */
-    protected $pluginName;
-
-    /**
-     * @var string
-     */
-    private $namespace;
-
-    /**
-     * @param string $pluginName
-     */
-    public function __construct($pluginName)
-    {
-        $this->pluginName = $pluginName;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public function boot()
+    public function __construct(protected string $pluginName)
     {
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function shutdown()
+    public function boot(): void
     {
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function build(ContainerBuilder $container)
+    public function shutdown(): void
     {
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getContainerExtension()
+    public function build(ContainerBuilder $container): void
+    {
+    }
+
+    public function getContainerExtension(): ?ExtensionInterface
     {
         if (null === $this->extension) {
             $extension = $this->createContainerExtension();
@@ -107,10 +71,7 @@ abstract class Bundle implements BundleInterface
         return null;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getNamespace()
+    public function getNamespace(): string
     {
         if (null === $this->namespace) {
             $this->parseClassName();
@@ -118,10 +79,7 @@ abstract class Bundle implements BundleInterface
         return $this->namespace;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getPath()
+    public function getPath(): string
     {
         if (null === $this->path) {
             $reflected = new \ReflectionObject($this);
@@ -130,18 +88,12 @@ abstract class Bundle implements BundleInterface
         return $this->path;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getPluginName()
+    public function getPluginName(): string
     {
         return $this->pluginName;
     }
 
-    /**
-     * @inheritDoc
-     */
-    final public function getName()
+    final public function getName(): string
     {
         if (null === $this->name) {
             $this->parseClassName();
@@ -151,10 +103,8 @@ abstract class Bundle implements BundleInterface
 
     /**
      * Returns the bundle's container extension class.
-     *
-     * @return string
      */
-    protected function getContainerExtensionClass()
+    protected function getContainerExtensionClass(): string
     {
         $basename = preg_replace('/Bundle$/', '', $this->getName());
         return $this->getNamespace().'\\DependencyInjection\\'.$basename.'Extension';
@@ -162,10 +112,8 @@ abstract class Bundle implements BundleInterface
     
     /**
      * Creates the bundle's container extension.
-     *
-     * @return ExtensionInterface|null
      */
-    protected function createContainerExtension()
+    protected function createContainerExtension(): ?ExtensionInterface
     {
         if (class_exists($class = $this->getContainerExtensionClass())) {
             return new $class();
@@ -174,7 +122,7 @@ abstract class Bundle implements BundleInterface
         return null;
     }
     
-    private function parseClassName()
+    private function parseClassName(): void
     {
         $pos = strrpos(static::class, '\\');
         $this->namespace = false === $pos ? '' : substr(static::class, 0, $pos);

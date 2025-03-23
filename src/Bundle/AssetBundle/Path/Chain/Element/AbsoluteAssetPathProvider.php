@@ -6,10 +6,7 @@ use Swoop\Bundle\AssetBundle\Model\AssetInterface;
 
 class AbsoluteAssetPathProvider extends AbstractAssetPathProviderChainElement
 {
-    /**
-     * @inheritDoc
-     */
-    public function getAssetPath(AssetInterface $asset)
+    public function getAssetPath(AssetInterface $asset): ?string
     {
         if ($asset->getSource()) {
             return $asset->getSource();

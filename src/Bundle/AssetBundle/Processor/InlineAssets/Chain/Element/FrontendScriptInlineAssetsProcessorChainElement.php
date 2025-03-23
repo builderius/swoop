@@ -6,28 +6,15 @@ use Swoop\Bundle\AssetBundle\Model\InlineAssetInterface;
 
 class FrontendScriptInlineAssetsProcessorChainElement extends AbstractInlineAssetsProcessorChainElement
 {
-    /**
-     * @var string
-     */
-    protected $assetRegistrationFunction = 'wp_footer';
+    protected ?string $assetRegistrationFunction = 'wp_footer';
+    protected ?string $registrationFunction = 'wp_enqueue_scripts';
 
-    /**
-     * @var string
-     */
-    protected $registrationFunction = 'wp_enqueue_scripts';
-
-    /**
-     * @inheritDoc
-     */
-    public function isApplicable($assetType)
+    public function isApplicable(string $assetType): bool
     {
         return 'script' === $assetType;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function enqueueDependency(InlineAssetInterface $asset)
+    public function enqueueDependency(InlineAssetInterface $asset): void
     {
         if (!empty($asset->getDependencies())) {
             $wp_scripts = wp_scripts();
@@ -39,19 +26,12 @@ class FrontendScriptInlineAssetsProcessorChainElement extends AbstractInlineAsse
         }
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function registerAsset(InlineAssetInterface $asset)
+    public function registerAsset(InlineAssetInterface $asset): void
     {
         echo $this->getFinalContent($asset);
     }
 
-    /**
-     * @param InlineAssetInterface $asset
-     * @return string
-     */
-    protected function getFinalContent(InlineAssetInterface $asset)
+    protected function getFinalContent(InlineAssetInterface $asset): string
     {
         $htmlAttributes = '';
         if (!empty($asset->getAssetData())) {

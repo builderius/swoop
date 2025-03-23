@@ -7,18 +7,12 @@ use Swoop\Bundle\AssetBundle\Model\StyleInterface;
 
 class StyleAssetsProcessorChainElement extends AbstractAssetsProcessorChainElement
 {
-    /**
-     * @inheritDoc
-     */
-    public function isApplicable(AssetInterface $asset)
+    public function isApplicable(AssetInterface $asset): bool
     {
         return $asset instanceof StyleInterface;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function register(AssetInterface $asset)
+    public function register(AssetInterface $asset): void
     {
         /** @var StyleInterface $asset */
         if ($asset->registerOnly()) {

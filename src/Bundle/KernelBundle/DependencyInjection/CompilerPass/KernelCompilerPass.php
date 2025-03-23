@@ -9,40 +9,16 @@ use Symfony\Component\DependencyInjection\Reference;
 class KernelCompilerPass implements CompilerPassInterface
 {
     /**
-     * @var string
-     */
-    private $tag;
-
-    /**
-     * @var string
-     */
-    private $service;
-    
-    /**
-     * @var string
-     */
-    private $method;
-
-    /**
-     * @param string $tag
-     * @param string $service
-     * @param string $method
      * @throws \Exception
      */
-    public function __construct($tag, $service, $method)
+    public function __construct(private string $tag, private string $service, private string $method)
     {
         if (!$tag || !$service || !$method) {
             throw new \Exception('missing parameter');
         }
-        $this->tag = $tag;
-        $this->service = $service;
-        $this->method = $method;
     }
-    
-    /**
-     * @inheritDoc
-     */
-    public function process(ContainerBuilder $container)
+
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->hasDefinition($this->service)) {
             return;

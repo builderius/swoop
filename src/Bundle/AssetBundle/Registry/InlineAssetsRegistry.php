@@ -6,24 +6,20 @@ use Swoop\Bundle\AssetBundle\Model\InlineAssetInterface;
 
 class InlineAssetsRegistry implements InlineAssetsRegistryInterface
 {
-    /**
-     * @var InlineAssetInterface[]
-     */
-    private $assets = [];
+    private array $assets = [];
 
-    /**
-     * @param InlineAssetInterface $script
-     */
-    public function addAsset(InlineAssetInterface $asset)
+    public function addAsset(InlineAssetInterface $asset): static
     {
         $this->assets[$asset->getCategory()][] = $asset;
+
+        return $this;
     }
 
     /**
      * @inheritDoc
      */
-    public function getAssets($category)
+    public function getAssets(string $category): array
     {
-        return isset($this->assets[$category]) ? $this->assets[$category] : [];
+        return $this->assets[$category] ?? [];
     }
 }

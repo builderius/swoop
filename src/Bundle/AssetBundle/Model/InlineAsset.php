@@ -18,107 +18,71 @@ class InlineAsset extends ParameterBag implements InlineAssetInterface, Conditio
     const DEPENDENCIES_FIELD = 'dependencies';
     const ASSET_DATA_FIELD = 'assetData';
 
-    /**
-     * @inheritDoc
-     */
-    public function getType()
+    public function getType(): string
     {
         return $this->get(self::TYPE_FIELD);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function setType($type)
+    public function setType(string $type): static
     {
         $this->set(self::TYPE_FIELD, $type);
 
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getTagType()
+    public function getTagType(): string
     {
         return $this->get(self::TAG_TYPE_FIELD);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function setTagType($tagType)
+    public function setTagType(string $tagType): static
     {
         $this->set(self::TAG_TYPE_FIELD, $tagType);
 
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getContent()
+    public function getContent(): string
     {
         return $this->get(self::CONTENT_FIELD);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function setContent($content)
+    public function setContent(string $content): static
     {
         $this->set(self::CONTENT_FIELD, $content);
 
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getId()
+    public function getId(): ?string
     {
         return $this->get(self::ID_FIELD);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function setId($id)
+    public function setId(string $id): static
     {
         $this->set(self::ID_FIELD, $id);
 
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getCategory()
+    public function getCategory(): string
     {
         return $this->get(self::CATEGORY_FIELD, InlineAssetInterface::FRONTEND_CATEGORY);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function setCategory($category)
+    public function setCategory(string $category): static
     {
         $this->set(self::CATEGORY_FIELD, $category);
         return $this;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return $this->get(self::DEPENDENCIES_FIELD, []);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function setDependencies(array $dependencies)
+    public function setDependencies(array $dependencies): static
     {
         $this->set(self::DEPENDENCIES_FIELD, $dependencies);
 
@@ -128,15 +92,12 @@ class InlineAsset extends ParameterBag implements InlineAssetInterface, Conditio
     /**
      * @inheritDoc
      */
-    public function getAssetData()
+    public function getAssetData(): array
     {
         return $this->get(self::ASSET_DATA_FIELD, []);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function addAssetDataItem(AssetDataItemInterface $dataItem)
+    public function addAssetDataItem(AssetDataItemInterface $dataItem): static
     {
         $assetData = $this->getAssetData();
         if (!in_array($dataItem, $assetData)) {

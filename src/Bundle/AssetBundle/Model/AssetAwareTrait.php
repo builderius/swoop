@@ -7,12 +7,9 @@ trait AssetAwareTrait
     /**
      * @var AssetInterface[]
      */
-    private $assets = [];
+    private array $assets = [];
 
-    /**
-     * @return bool
-     */
-    public function hasAssets()
+    public function hasAssets(): bool
     {
         return !empty($this->assets);
     }
@@ -20,16 +17,12 @@ trait AssetAwareTrait
     /**
      * @return AssetInterface[]
      */
-    public function getAssets()
+    public function getAssets(): array
     {
         return $this->assets;
     }
 
-    /**
-     * @param AssetInterface $asset
-     * @return $this
-     */
-    public function addAsset(AssetInterface $asset)
+    public function addAsset(AssetInterface $asset): static
     {
         if (!in_array($asset, $this->assets)) {
             $this->assets[] = $asset;
@@ -40,9 +33,8 @@ trait AssetAwareTrait
 
     /**
      * @param AssetInterface[] $assets
-     * @return $this
      */
-    public function setAssets(array $assets)
+    public function setAssets(array $assets): static
     {
         $this->assets = $assets;
 

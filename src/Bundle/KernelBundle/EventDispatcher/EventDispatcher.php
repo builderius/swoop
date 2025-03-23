@@ -2,8 +2,8 @@
 
 namespace Swoop\Bundle\KernelBundle\EventDispatcher;
 
-use Swoop\Bundle\ConditionBundle\Model\ConditionAwareInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
+use Swoop\Bundle\ConditionBundle\Model\ConditionAwareInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher as BaseEventDispatcher;
 
 class EventDispatcher extends BaseEventDispatcher
@@ -11,7 +11,7 @@ class EventDispatcher extends BaseEventDispatcher
     /**
      * @inheritDoc
      */
-    protected function callListeners(iterable $listeners, string $eventName, object $event)
+    protected function callListeners(iterable $listeners, string $eventName, object $event): void
     {
         $stoppable = $event instanceof StoppableEventInterface;
 

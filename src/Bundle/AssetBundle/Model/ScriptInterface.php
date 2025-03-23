@@ -4,19 +4,12 @@ namespace Swoop\Bundle\AssetBundle\Model;
 
 interface ScriptInterface extends AssetInterface
 {
-    /**
-     * @return bool|null
-     */
-    public function isInFooter();
+    public function isInFooter(): ?bool;
 
     /**
      * @return ScriptLocalizationInterface[]
      */
-    public function getLocalizations();
+    public function getLocalizations(): array;
 
-    /**
-     * @param ScriptLocalizationInterface $localization
-     * @return $this
-     */
-    public function addLocalization(ScriptLocalizationInterface $localization);
+    public function addLocalization(ScriptLocalizationInterface $localization): static;
 }

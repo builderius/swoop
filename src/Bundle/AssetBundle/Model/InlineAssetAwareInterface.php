@@ -4,25 +4,17 @@ namespace Swoop\Bundle\AssetBundle\Model;
 
 interface InlineAssetAwareInterface
 {
-    /**
-     * @return bool
-     */
-    public function hasInlineAssets();
+    public function hasInlineAssets(): bool;
 
     /**
      * @return InlineAssetInterface[]
      */
-    public function getInlineAssets();
+    public function getInlineAssets(): array;
 
-    /**
-     * @param InlineAssetInterface $inlineAsset
-     * @return $this
-     */
-    public function addInlineAsset(InlineAssetInterface $inlineAsset);
+    public function addInlineAsset(InlineAssetInterface $inlineAsset): static;
 
     /**
      * @param InlineAssetInterface[] $inlineAssets
-     * @return $this
      */
-    public function setInlineAssets(array $inlineAssets);
+    public function setInlineAssets(array $inlineAssets): static;
 }

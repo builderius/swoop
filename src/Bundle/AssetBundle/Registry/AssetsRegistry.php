@@ -6,24 +6,20 @@ use Swoop\Bundle\AssetBundle\Model\AssetInterface;
 
 class AssetsRegistry implements AssetsRegistryInterface
 {
-    /**
-     * @var AssetInterface[]
-     */
-    private $assets = [];
+    private array $assets = [];
 
-    /**
-     * @param AssetInterface $asset
-     */
-    public function addAsset(AssetInterface $asset)
+    public function addAsset(AssetInterface $asset): static
     {
         $this->assets[$asset->getCategory()][] = $asset;
+
+        return $this;
     }
 
     /**
      * @inheritDoc
      */
-    public function getAssets($category)
+    public function getAssets(string $category): array
     {
-        return isset($this->assets[$category]) ? $this->assets[$category] : [];
+        return $this->assets[$category] ?? [];
     }
 }

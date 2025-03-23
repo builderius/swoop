@@ -6,11 +6,5 @@ use Swoop\Bundle\AssetBundle\Model\ScriptLocalizationInterface;
 
 interface ScriptLocalizationFactoryInterface
 {
-    /**
-     * @param string $object
-     * @param string $property
-     * @param array $data
-     * @return ScriptLocalizationInterface
-     */
-    public static function create($object, $property, $data);
+    public static function create(string $object, string $property, array $data): ScriptLocalizationInterface;
 }

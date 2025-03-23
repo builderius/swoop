@@ -16,42 +16,27 @@ abstract class AbstractHook extends ParameterBag implements HookInterface, Condi
 
     use ConditionAwareTrait;
 
-    /**
-     * @inheritDoc
-     */
-    public function getInitHookName()
+    public function getInitHookName(): ?string
     {
         return $this->get(self::INIT_HOOK_NAME_FIELD, 'init');
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getInitHookPriority()
+    public function getInitHookPriority(): int
     {
         return $this->get(self::INIT_HOOK_PRIORITY_FIELD, 10);
     }
 
-    /**
-     * @return string
-     */
-    public function getTag()
+    public function getTag(): string
     {
         return $this->get(self::TAG_FIELD);
     }
 
-    /**
-     * @return int
-     */
-    public function getAcceptedArgs()
+    public function getAcceptedArgs(): int
     {
         return $this->get(self::ACCEPTED_ARGS_FIELD, 1);
     }
 
-    /**
-     * @return int
-     */
-    public function getPriority()
+    public function getPriority(): int
     {
         return $this->get(self::PRIORITY_FIELD, 10);
     }

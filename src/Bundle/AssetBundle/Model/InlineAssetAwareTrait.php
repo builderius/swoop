@@ -7,12 +7,9 @@ trait InlineAssetAwareTrait
     /**
      * @var InlineAssetInterface[]
      */
-    private $inlineAssets = [];
+    private array $inlineAssets = [];
 
-    /**
-     * @return bool
-     */
-    public function hasInlineAssets()
+    public function hasInlineAssets(): bool
     {
         return !empty($this->inlineAssets);
     }
@@ -20,16 +17,12 @@ trait InlineAssetAwareTrait
     /**
      * @return InlineAssetInterface[]
      */
-    public function getInlineAssets()
+    public function getInlineAssets(): array
     {
         return $this->inlineAssets;
     }
 
-    /**
-     * @param InlineAssetInterface $inlineAsset
-     * @return $this
-     */
-    public function addInlineAsset(InlineAssetInterface $inlineAsset)
+    public function addInlineAsset(InlineAssetInterface $inlineAsset): static
     {
         if (!\in_array($inlineAsset, $this->inlineAssets)) {
             $this->inlineAssets[] = $inlineAsset;
@@ -39,9 +32,8 @@ trait InlineAssetAwareTrait
 
     /**
      * @param InlineAssetInterface[] $inlineAssets
-     * @return $this
      */
-    public function setInlineAssets(array $inlineAssets)
+    public function setInlineAssets(array $inlineAssets): static
     {
         $this->inlineAssets = $inlineAssets;
         return $this;

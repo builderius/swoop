@@ -15,10 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 
 class AssetBundle extends Bundle
 {
-    /**
-     * @inheritDoc
-     */
-    public function build(ContainerBuilder $container)
+    public function build(ContainerBuilder $container): void
     {
         parent::build($container);
 
@@ -42,10 +39,7 @@ class AssetBundle extends Bundle
         );
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function boot()
+    public function boot(): void
     {
         /** @var AssetsRegistryInterface $assetsRegistry */
         $assetsRegistry = $this->container->get('swoop_asset.registry.assets');

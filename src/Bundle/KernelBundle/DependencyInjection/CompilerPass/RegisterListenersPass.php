@@ -10,45 +10,32 @@ use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Contracts\EventDispatcher\Event;
+
 /**
  * Compiler pass to register tagged services for an event dispatcher.
  */
 class RegisterListenersPass implements CompilerPassInterface
 {
-    protected $dispatcherService;
-    protected $listenerTag;
-    protected $subscriberTag;
-    protected $eventAliasesParameter;
-    private $hotPathEvents = [];
-    private $hotPathTagName = 'container.hot_path';
-    private $noPreloadEvents = [];
-    private $noPreloadTagName = 'container.no_preload';
-    public function __construct(string $dispatcherService = 'event_dispatcher', string $listenerTag = 'kernel.event_listener', string $subscriberTag = 'kernel.event_subscriber', string $eventAliasesParameter = 'event_dispatcher.event_aliases')
-    {
-        $this->dispatcherService = $dispatcherService;
-        $this->listenerTag = $listenerTag;
-        $this->subscriberTag = $subscriberTag;
-        $this->eventAliasesParameter = $eventAliasesParameter;
+    private array $hotPathEvents = [];
+    private string $hotPathTagName = 'container.hot_path';
+    private array $noPreloadEvents = [];
+    private string $noPreloadTagName = 'container.no_preload';
+    public function __construct(
+        protected string $dispatcherService = 'event_dispatcher',
+        protected string $listenerTag = 'kernel.event_listener',
+        protected string $subscriberTag = 'kernel.event_subscriber',
+        protected string $eventAliasesParameter = 'event_dispatcher.event_aliases'
+    ) {
     }
-    /**
-     * @return $this
-     */
-    public function setHotPathEvents(array $hotPathEvents)
+
+    public function setHotPathEvents(array $hotPathEvents): static
     {
         $this->hotPathEvents = array_flip($hotPathEvents);
 
         return $this;
     }
-    /**
-     * @return $this
-     */
-    public function setNoPreloadEvents(array $noPreloadEvents) : self
-    {
-        $this->noPreloadEvents = array_flip($noPreloadEvents);
 
-        return $this;
-    }
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         if (!$container->hasDefinition($this->dispatcherService) && !$container->hasAlias($this->dispatcherService)) {
             return;
@@ -154,8 +141,8 @@ class RegisterListenersPass implements CompilerPassInterface
  */
 class ExtractingEventDispatcher extends EventDispatcher implements EventSubscriberInterface
 {
-    public $listeners = [];
-    public static $aliases = [];
+    public array $listeners = [];
+    public static array $aliases = [];
     public static $subscriber;
     public function addListener(string $eventName, $listener, int $priority = 0)
     {

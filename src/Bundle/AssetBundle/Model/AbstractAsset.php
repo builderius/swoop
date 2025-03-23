@@ -18,66 +18,45 @@ abstract class AbstractAsset extends ParameterBag  implements AssetInterface, Co
     const DEPENDENCIES_FIELD = 'dependencies';
     const ASSET_DATA_FIELD = 'data';
 
-    /**
-     * @inheritDoc
-     */
-    public function registerOnly()
+    public function registerOnly(): bool
     {
         return $this->get(self::REGISTER_ONLY, false);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getHandle()
+    public function getHandle(): string
     {
         return $this->get(self::HANDLE_FIELD);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getSource()
+    public function getSource(): string
     {
         return $this->get(self::SOURCE_FIELD);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getDependencies()
+    public function getDependencies(): array
     {
         return $this->get(self::DEPENDENCIES_FIELD, []);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getVersion()
+    public function getVersion(): string
     {
         return $this->get(self::VERSION_FIELD);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getCategory()
+    public function getCategory(): string
     {
         return $this->get(self::CATEGORY_FIELD);
     }
 
     /**
-     * @inheritDoc
+     * {@inheritdoc}
      */
-    public function getAssetData()
+    public function getAssetData(): array
     {
         return $this->get(self::ASSET_DATA_FIELD, []);
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function addAssetDataItem(AssetDataItemInterface $dataItem)
+    public function addAssetDataItem(AssetDataItemInterface $dataItem): static
     {
         $assetData = $this->getAssetData();
         if (!in_array($dataItem, $assetData)) {

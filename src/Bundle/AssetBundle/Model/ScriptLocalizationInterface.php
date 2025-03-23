@@ -4,23 +4,11 @@ namespace Swoop\Bundle\AssetBundle\Model;
 
 interface ScriptLocalizationInterface
 {
-    /**
-     * @return string
-     */
-    public function getObjectName();
+    public function getObjectName(): string;
 
-    /**
-     * @return string
-     */
-    public function getPropertyName();
+    public function getPropertyName(): string;
 
-    /**
-     * @return mixed
-     */
-    public function getPropertyData();
+    public function getPropertyData(): mixed;
 
-    /**
-     * @return int
-     */
-    public function getSortOrder();
+    public function getSortOrder(): int;
 }

@@ -7,10 +7,7 @@ use Swoop\Bundle\HookBundle\Model\AbstractFilter;
 
 class ScriptLoaderTagFilter extends AbstractFilter
 {
-    /**
-     * @inheritDoc
-     */
-    public function getFunction(...$args)
+    public function getFunction(...$args): mixed
     {
         $tag = $args[0];
         $handle = $args[1];
