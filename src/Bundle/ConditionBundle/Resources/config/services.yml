@@ -7,4 +7,4 @@ services:
         arguments:
             - '@swoop_condition.registry.conditions'
         tags:
-            - { name: swoop_wpcli_command }
+            - { name: wp_cli_command }

@@ -10,7 +10,7 @@ services:
               priority: 999
               accepted_args: 2
         tags:
-            - { name: swoop_hook }
+            - { name: wp_hook }
 
     swoop_query.hook.post_status__not_in:
         class: 'Swoop\Bundle\QueryBundle\Hooks\PostStatusNotInHook'
@@ -19,7 +19,7 @@ services:
               priority: 999
               accepted_args: 2
         tags:
-            - { name: swoop_hook }
+            - { name: wp_hook }
 
     swoop_query.hook.post_type__not_in:
       class: 'Swoop\Bundle\QueryBundle\Hooks\PostTypeNotInHook'
@@ -28,7 +28,7 @@ services:
           priority: 999
           accepted_args: 2
       tags:
-        - { name: swoop_hook }
+        - { name: wp_hook }
 
     swoop_query.hook.post_parent_join:
         class: 'Swoop\Bundle\QueryBundle\Hooks\PostParentJoinHook'
@@ -37,7 +37,7 @@ services:
               priority: 999
               accepted_args: 2
         tags:
-            - { name: swoop_hook }
+            - { name: wp_hook }
 
     swoop_query.hook.parent_name__in:
         class: 'Swoop\Bundle\QueryBundle\Hooks\ParentNameInHook'
@@ -46,7 +46,7 @@ services:
               priority: 999
               accepted_args: 2
         tags:
-            - { name: swoop_hook }
+            - { name: wp_hook }
 
     swoop_query.hook.parent_name__not_in:
         class: 'Swoop\Bundle\QueryBundle\Hooks\ParentNameNotInHook'
@@ -55,4 +55,4 @@ services:
               priority: 999
               accepted_args: 2
         tags:
-            - { name: swoop_hook }
+            - { name: wp_hook }
