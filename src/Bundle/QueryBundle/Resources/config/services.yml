@@ -1,58 +1,157 @@
 services:
-    swoop_query.wp_query:
-        class: '\WP_Query'
-        public: true
+  swoop_query.wp_query:
+    class: '\WP_Query'
+    public: true
 
-    swoop_query.hook.post_name__not_in:
-        class: 'Swoop\Bundle\QueryBundle\Hooks\PostNameNotInHook'
-        arguments:
-            - tag: 'posts_where'
-              priority: 999
-              accepted_args: 2
-        tags:
-            - { name: wp_hook }
+  swoop_query.hook.post_name__not_in:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostNameNotInHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
 
-    swoop_query.hook.post_status__not_in:
-        class: 'Swoop\Bundle\QueryBundle\Hooks\PostStatusNotInHook'
-        arguments:
-            - tag: 'posts_where'
-              priority: 999
-              accepted_args: 2
-        tags:
-            - { name: wp_hook }
+  swoop_query.hook.post_status__not_in:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostStatusNotInHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
 
-    swoop_query.hook.post_type__not_in:
-      class: 'Swoop\Bundle\QueryBundle\Hooks\PostTypeNotInHook'
-      arguments:
-        - tag: 'posts_where'
-          priority: 999
-          accepted_args: 2
-      tags:
-        - { name: wp_hook }
+  swoop_query.hook.post_type__not_in:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostTypeNotInHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
 
-    swoop_query.hook.post_parent_join:
-        class: 'Swoop\Bundle\QueryBundle\Hooks\PostParentJoinHook'
-        arguments:
-            - tag: 'posts_join'
-              priority: 999
-              accepted_args: 2
-        tags:
-            - { name: wp_hook }
+  swoop_query.hook.post_parent_join:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostParentJoinHook
+    arguments:
+      - tag: 'posts_join'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
 
-    swoop_query.hook.parent_name__in:
-        class: 'Swoop\Bundle\QueryBundle\Hooks\ParentNameInHook'
-        arguments:
-            - tag: 'posts_where'
-              priority: 999
-              accepted_args: 2
-        tags:
-            - { name: wp_hook }
+  swoop_query.hook.post_parent__not_in:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostParentNotInHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
 
-    swoop_query.hook.parent_name__not_in:
-        class: 'Swoop\Bundle\QueryBundle\Hooks\ParentNameNotInHook'
-        arguments:
-            - tag: 'posts_where'
-              priority: 999
-              accepted_args: 2
-        tags:
-            - { name: wp_hook }
+  swoop_query.hook.parent_name__in:
+    class: Swoop\Bundle\QueryBundle\Hooks\ParentNameInHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
+
+  swoop_query.hook.parent_name__not_in:
+    class: Swoop\Bundle\QueryBundle\Hooks\ParentNameNotInHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
+
+  swoop_query.hook.post_name_like:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostNameLikeHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
+
+  swoop_query.hook.post_title_like:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostTitleLikeHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
+
+  swoop_query.hook.post_title:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostTitleHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
+
+  swoop_query.hook.post_content_like:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostContentLikeHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
+
+  swoop_query.hook.post_excerpt_like:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostExcerptLikeHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
+
+  swoop_query.hook.post_id_greater_than:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostIdGreaterThanHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
+
+  swoop_query.hook.post_id_less_than:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostIdLessThanHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
+
+  swoop_query.hook.post_has_featured_image:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostHasFeaturedImageHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
+
+  swoop_query.hook.post_has_excerpt:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostHasExcerptHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
+
+  swoop_query.hook.post_word_count_range:
+    class: Swoop\Bundle\QueryBundle\Hooks\PostWordCountRangeHook
+    arguments:
+      - tag: 'posts_where'
+        priority: 999
+        accepted_args: 2
+    tags:
+      - { name: wp_hook }
