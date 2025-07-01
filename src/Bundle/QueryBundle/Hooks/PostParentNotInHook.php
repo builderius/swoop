@@ -1,6 +1,6 @@
 <?php
 
-namespace Bundle\QueryBundle\Hooks;
+namespace Swoop\Bundle\QueryBundle\Hooks;
 
 use Swoop\Bundle\HookBundle\Model\AbstractFilter;
 
