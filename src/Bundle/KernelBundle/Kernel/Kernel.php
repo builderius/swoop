@@ -359,9 +359,17 @@ class Kernel
             ) {
                 self::$freshCache[$cachePath] = true;
                 $this->container->set('kernel', $this);
-                error_reporting($errorLevel);
 
-                return;
+                // SYMFONY SELF-HEALING: Validate container consistency to detect namespace mismatches
+                if (!$this->validateContainerConsistency($cacheDir, $fs)) {
+                    // Container namespace mismatch detected - force regeneration
+                    $this->container = null;
+                    \error_reporting($errorLevel);
+                    // Continue to regeneration logic below
+                } else {
+                    \error_reporting($errorLevel);
+                    return;
+                }
             }
         } catch (\Throwable $e) {
         }
@@ -467,6 +475,54 @@ class Kernel
             }
 
             touch($oldContainerDir.'.legacy');
+        }
+    }
+
+    /**
+     * Validates container consistency to detect namespace mismatches.
+     * This implements Symfony's self-healing container pattern.
+     */
+    protected function validateContainerConsistency(string $cacheDir, Filesystem $fs): bool
+    {
+        if (!$this->container) {
+            return false;
+        }
+
+        try {
+            // Test container integrity by attempting to load a known service
+            // Use event_dispatcher as it's consistently available in Symfony containers
+            $this->container->get('event_dispatcher');
+            return true;
+
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+
+            // Detect namespace mismatch errors
+            if (\strpos($errorMessage, 'Failed opening required') !== false ||
+                \strpos($errorMessage, 'include_path') !== false ||
+                \strpos($errorMessage, 'Container') !== false) {
+
+                // Log the namespace mismatch for debugging
+                \error_log(\sprintf(
+                    'Builderius Container Namespace Mismatch Detected: %s. Triggering container regeneration.',
+                    $errorMessage
+                ));
+
+                // Force container regeneration by removing cache directory
+                try {
+                    if (\is_dir($cacheDir)) {
+                        $fs->remove($cacheDir);
+                    }
+                } catch (\Throwable $cleanupException) {
+                    // If cleanup fails, log but continue - the regeneration will still work
+                    \error_log('Builderius Container Cache Cleanup Warning: ' . $cleanupException->getMessage());
+                }
+
+                return false;
+            }
+
+            // Re-throw other types of exceptions as they indicate different issues
+            throw $e;
         }
     }
 
