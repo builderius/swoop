@@ -3,6 +3,7 @@
 namespace Swoop\Bundle\MigrationBundle\Loader;
 
 use Swoop\Bundle\KernelBundle\Bundle\BundleInterface;
+use Swoop\Bundle\KernelBundle\Kernel\Kernel;
 use Swoop\Bundle\MigrationBundle\Migration\Installation;
 use Swoop\Bundle\MigrationBundle\Migration\Migration;
 use Swoop\Bundle\MigrationBundle\Migration\MigrationState;
@@ -39,14 +40,21 @@ class MigrationsLoader
     protected $container;
 
     /**
+     * @var Kernel
+     */
+    protected $kernel;
+
+    /**
      * @param array $plugins
      * @param ContainerInterface $container
+     * @param Kernel $kernel
      */
-    public function __construct(array $plugins, ContainerInterface $container)
+    public function __construct(array $plugins, ContainerInterface $container, Kernel $kernel)
     {
         $this->plugins = $plugins;
         $this->container = $container;
-        $this->bundles = $container->get('kernel')->getBundles();
+        $this->kernel = $kernel;
+        $this->bundles = $kernel->getBundles();
     }
 
     /**

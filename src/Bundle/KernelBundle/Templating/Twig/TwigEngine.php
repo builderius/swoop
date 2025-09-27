@@ -2,22 +2,19 @@
 
 namespace Swoop\Bundle\KernelBundle\Templating\Twig;
 
-use Symfony\Component\Templating\EngineInterface;
-use Symfony\Component\Templating\StreamingEngineInterface;
-use Symfony\Component\Templating\TemplateNameParserInterface;
-use Symfony\Component\Templating\TemplateReferenceInterface;
+use Swoop\Bundle\KernelBundle\Templating\TemplateNameParser;
 use Twig\Environment;
 use Twig\Error\Error;
 use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;
 use Twig\Template;
 
-class TwigEngine implements EngineInterface, StreamingEngineInterface
+class TwigEngine
 {
     protected $environment;
     protected $parser;
 
-    public function __construct(Environment $environment, TemplateNameParserInterface $parser)
+    public function __construct(Environment $environment, TemplateNameParser $parser)
     {
         $this->environment = $environment;
         $this->parser = $parser;
@@ -28,7 +25,8 @@ class TwigEngine implements EngineInterface, StreamingEngineInterface
      */
     public function render($name, array $parameters = array())
     {
-        $absoluteName = $this->parser->parse($name)->getLogicalName();
+        $parsedTemplate = $this->parser->parse($name);
+        $absoluteName = $parsedTemplate['logicalName'];
         $filename = \substr(\strrchr($absoluteName, "/"), 1);
         /** @var FilesystemLoader $loader */
         $loader = $this->environment->getLoader();
@@ -89,14 +87,13 @@ class TwigEngine implements EngineInterface, StreamingEngineInterface
 
         $template = $this->parser->parse($name);
 
-        return 'twig' === $template->get('engine');
+        return 'twig' === $template['engine'];
     }
 
     /**
      * Loads the given template.
      *
-     * @param string|TemplateReferenceInterface|Template $name A template name or an instance of
-     *                                                         TemplateReferenceInterface or Template
+     * @param string|Template $name A template name or Template instance
      *
      * @return Template
      *

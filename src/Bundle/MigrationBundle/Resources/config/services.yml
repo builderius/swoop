@@ -23,6 +23,7 @@ services:
     arguments:
       - '%kernel.plugins%'
       - '@service_container'
+      - '@kernel'
 
   swoop_migration.executor.migrations:
     class: 'Swoop\Bundle\MigrationBundle\Executor\MigrationsExecutor'

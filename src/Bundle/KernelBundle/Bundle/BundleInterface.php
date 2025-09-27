@@ -2,11 +2,10 @@
 
 namespace Swoop\Bundle\KernelBundle\Bundle;
 
-use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
-interface BundleInterface extends ContainerAwareInterface
+interface BundleInterface
 {
     /**
      * Boots the Bundle.

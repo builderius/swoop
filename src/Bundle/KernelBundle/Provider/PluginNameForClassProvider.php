@@ -3,7 +3,7 @@
 namespace Swoop\Bundle\KernelBundle\Provider;
 
 use Swoop\Bundle\KernelBundle\Bundle\BundleInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Swoop\Bundle\KernelBundle\Kernel\Kernel;
 
 class PluginNameForClassProvider
 {
@@ -13,11 +13,11 @@ class PluginNameForClassProvider
     private $bundles;
 
     /**
-     * @param ContainerInterface $container
+     * @param Kernel $kernel
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Kernel $kernel)
     {
-        $this->bundles = $container->get('kernel')->getBundles();
+        $this->bundles = $kernel->getBundles();
     }
 
     /**

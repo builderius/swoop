@@ -2,18 +2,7 @@ services:
     templating.name_parser:
         class: 'Swoop\Bundle\KernelBundle\Templating\TemplateNameParser'
         arguments:
-            - '@service_container'
-
-    templating.php.loader:
-        class: 'Symfony\Component\Templating\Loader\FilesystemLoader'
-        arguments:
-            - []
-
-    templating.php.engine:
-        class: 'Symfony\Component\Templating\PhpEngine'
-        arguments:
-            - '@templating.name_parser'
-            - '@templating.php.loader'
+            - '@kernel'
 
     twig.loader.filesystem:
         class: 'Twig\Loader\FilesystemLoader'
@@ -29,12 +18,6 @@ services:
             - '@twig'
             - '@templating.name_parser'
 
-    templating:
-        class: 'Symfony\Component\Templating\DelegatingEngine'
-        public: true
-        arguments:
-            - ['@templating.php.engine', '@templating.twig.engine']
-
     swoop_kernel.boot_service.composite:
         class: 'Swoop\Bundle\KernelBundle\Boot\CompositeBootService'
         public: true
@@ -48,7 +31,7 @@ services:
     swoop_kernel.provider.plugin_name_for_class:
         class: 'Swoop\Bundle\KernelBundle\Provider\PluginNameForClassProvider'
         arguments:
-            - '@service_container'
+            - '@kernel'
 
     event_dispatcher:
         class: 'Swoop\Bundle\KernelBundle\EventDispatcher\EventDispatcher'

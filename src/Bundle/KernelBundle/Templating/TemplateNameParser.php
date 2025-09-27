@@ -3,12 +3,7 @@
 namespace Swoop\Bundle\KernelBundle\Templating;
 
 use Swoop\Bundle\KernelBundle\Kernel\Kernel;
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\Templating\TemplateNameParserInterface;
-use Symfony\Component\Templating\TemplateReference;
-use Symfony\Component\Templating\TemplateReferenceInterface;
-
-class TemplateNameParser implements TemplateNameParserInterface
+class TemplateNameParser
 {
     /**
      * @var Kernel
@@ -16,19 +11,19 @@ class TemplateNameParser implements TemplateNameParserInterface
     private $kernel;
 
     /**
-     * @param ContainerInterface $container
+     * @param Kernel $kernel
      */
-    public function __construct(ContainerInterface $container)
+    public function __construct(Kernel $kernel)
     {
-        $this->kernel = $container->get('kernel');
+        $this->kernel = $kernel;
     }
     
     /**
-     * @inheritDoc
+     * Parse template name and return resolved template path and engine
      */
     public function parse($name)
     {
-        if ($name instanceof TemplateReferenceInterface) {
+        if (is_array($name)) {
             return $name;
         }
 
@@ -48,6 +43,10 @@ class TemplateNameParser implements TemplateNameParserInterface
             }
         }
 
-        return new TemplateReference($name, $engine);
+        return [
+            'name' => $name,
+            'engine' => $engine,
+            'logicalName' => $name
+        ];
     }
 }
