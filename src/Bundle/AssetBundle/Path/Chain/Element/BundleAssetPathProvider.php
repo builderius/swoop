@@ -6,7 +6,7 @@ use InvalidArgumentException;
 use Swoop\Bundle\AssetBundle\Model\AssetInterface;
 use Swoop\Bundle\AssetBundle\Model\ScriptInterface;
 use Swoop\Bundle\AssetBundle\Model\StyleInterface;
-use Swoop\Bundle\KernelBundle\Kernel\Kernel;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class BundleAssetPathProvider extends AbstractAssetPathProviderChainElement
 {
@@ -16,11 +16,11 @@ class BundleAssetPathProvider extends AbstractAssetPathProviderChainElement
     private $bundles = [];
 
     /**
-     * @param Kernel $kernel
+     * @param ContainerInterface $container
      */
-    public function __construct(Kernel $kernel)
+    public function __construct(ContainerInterface $container)
     {
-        $this->bundles = $kernel->getBundles();
+        $this->bundles = $container->get('kernel')->getBundles();
     }
 
     /**

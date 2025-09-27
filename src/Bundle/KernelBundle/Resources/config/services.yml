@@ -2,7 +2,7 @@ services:
     templating.name_parser:
         class: 'Swoop\Bundle\KernelBundle\Templating\TemplateNameParser'
         arguments:
-            - '@kernel'
+            - '@service_container'
 
     twig.loader.filesystem:
         class: 'Twig\Loader\FilesystemLoader'
@@ -31,7 +31,7 @@ services:
     swoop_kernel.provider.plugin_name_for_class:
         class: 'Swoop\Bundle\KernelBundle\Provider\PluginNameForClassProvider'
         arguments:
-            - '@kernel'
+            - '@service_container'
 
     event_dispatcher:
         class: 'Swoop\Bundle\KernelBundle\EventDispatcher\EventDispatcher'

@@ -2,11 +2,14 @@
 
 namespace Swoop\Bundle\KernelBundle\Bundle;
 
+use Symfony\Component\DependencyInjection\ContainerAwareTrait;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 abstract class Bundle implements BundleInterface
 {
+    use ContainerAwareTrait;
 
     /**
      * @var string
@@ -81,7 +84,7 @@ abstract class Bundle implements BundleInterface
                 }
                 // check naming convention
                 $basename = preg_replace('/Bundle$/', '', $this->getName());
-                $expectedAlias = strtolower(preg_replace('/[A-Z]/', '_\\0', lcfirst($basename)));
+                $expectedAlias = Container::underscore($basename);
                 if ($expectedAlias != $extension->getAlias()) {
                     throw new \LogicException(
                         sprintf(

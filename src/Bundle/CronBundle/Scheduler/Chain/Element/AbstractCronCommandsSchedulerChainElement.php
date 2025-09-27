@@ -7,7 +7,7 @@ use Swoop\Bundle\CronBundle\Model\CronCommandInterface;
 use Swoop\Bundle\CronBundle\Scheduler\CronCommandsSchedulerInterface;
 use Swoop\Bundle\HookBundle\Registry\HooksRegistryInterface;
 use Swoop\Bundle\KernelBundle\Bundle\BundleInterface;
-use Swoop\Bundle\KernelBundle\Kernel\Kernel;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 abstract class AbstractCronCommandsSchedulerChainElement implements
     CronCommandsSchedulerInterface,
@@ -29,12 +29,12 @@ abstract class AbstractCronCommandsSchedulerChainElement implements
     private $successor;
 
     /**
-     * @param Kernel $kernel
+     * @param ContainerInterface $container
      * @param HooksRegistryInterface $hooksRegistry
      */
-    public function __construct(Kernel $kernel, HooksRegistryInterface $hooksRegistry)
+    public function __construct(ContainerInterface $container, HooksRegistryInterface $hooksRegistry)
     {
-        $this->bundles = $kernel->getBundles();
+        $this->bundles = $container->get('kernel')->getBundles();
         $this->hooksRegistry = $hooksRegistry;
     }
 

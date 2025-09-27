@@ -13,7 +13,7 @@ services:
   swoop_asset.path_provider.bundle:
     class: Swoop\Bundle\AssetBundle\Path\Chain\Element\BundleAssetPathProvider
     arguments:
-      - '@kernel'
+      - '@service_container'
     calls:
       - [setSuccessor, ['@swoop_asset.path_provider.absolute']]
 
