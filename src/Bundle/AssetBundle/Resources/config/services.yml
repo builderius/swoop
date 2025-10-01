@@ -109,7 +109,7 @@ services:
         priority: 999
         accepted_args: 2
     tags:
-      - { name: swoop_hook }
+      - { name: wp_hook }
 
   swoop_asset.hook.script_loader_tag:
     class: Swoop\Bundle\AssetBundle\Hook\ScriptLoaderTagFilter
@@ -118,4 +118,4 @@ services:
         priority: 999
         accepted_args: 2
     tags:
-      - { name: swoop_hook }
+      - { name: wp_hook }

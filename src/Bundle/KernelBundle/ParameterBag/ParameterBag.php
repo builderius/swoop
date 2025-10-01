@@ -2,6 +2,7 @@
 
 namespace Swoop\Bundle\KernelBundle\ParameterBag;
 
+#[\AllowDynamicProperties]
 class ParameterBag implements \IteratorAggregate, \Countable
 {
     public function __construct(protected array $parameters = [])

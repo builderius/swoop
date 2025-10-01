@@ -16,21 +16,57 @@ use Symfony\Component\Yaml\Yaml;
 
 class Kernel
 {
-    private static array $freshCache = [];
-    protected string $pluginBaseName;
-    protected string $pluginName;
-    protected array $rootDirs = [];
-    protected ContainerInterface $container;
+    /**
+     * @var bool
+     */
+    protected $debug;
+
+    /**
+     * @var array
+     */
+    private static $freshCache = [];
+
+    /**
+     * @var string
+     */
+    protected $pluginBaseName;
+
+    /**
+     * @var string
+     */
+    protected $pluginName;
+
+    /**
+     * @var array
+     */
+    protected $rootDirs = [];
+
+    /**
+     * @var ContainerInterface
+     */
+    protected $container;
 
     /**
      * @var BundleInterface[]
      */
-    protected array $bundles = [];
-    protected array $plugins = [];
-    protected bool $booted = false;
+    protected $bundles = [];
 
-    public function __construct(protected bool $debug = false)
+    /**
+     * @var array
+     */
+    protected $plugins = [];
+
+    /**
+     * @var bool
+     */
+    protected $booted = false;
+
+    /**
+     * @param false $debug
+     */
+    public function __construct($debug = false)
     {
+        $this->debug = $debug;
         $pluginRootFile =debug_backtrace(2, 3)[0]['file'];
         $this->pluginBaseName = plugin_basename($pluginRootFile);
         $this->pluginName = explode('/', $this->pluginBaseName)[0];
@@ -40,17 +76,23 @@ class Kernel
         $this->rootDirs[$this->pluginBaseName][] = realpath(dirname($r->getFileName(), 3) . '/../..');
     }
 
-    public function getPluginName(): string
+    /**
+     * @return string
+     */
+    public function getPluginName()
     {
         return $this->pluginName;
     }
 
-    public function getRootDirs(): array
+    /**
+     * @return array
+     */
+    public function getRootDirs()
     {
         return apply_filters(sprintf('%s_add_root_dir', $this->pluginName), $this->rootDirs);
     }
 
-    public function registerBundles(): void
+    public function registerBundles()
     {
         foreach ($this->collectBundles() as $class => $params) {
             if (!in_array($params['plugin'], $this->plugins)) {
@@ -62,7 +104,10 @@ class Kernel
         }
     }
 
-    public function collectBundles(): array
+    /**
+     * @return array
+     */
+    public function collectBundles()
     {
         $files = $this->findBundles($this->getRootDirs());
 
@@ -82,7 +127,13 @@ class Kernel
         return $bundles;
     }
 
-    public function compareBundles(array $a, array $b): int
+    /**
+     * @param array $a
+     * @param array $b
+     *
+     * @return int
+     */
+    public function compareBundles($a, $b)
     {
         $p1 = (int)$a['priority'];
         $p2 = (int)$b['priority'];
@@ -97,8 +148,12 @@ class Kernel
 
     /**
      * Finds all .../Resource/config/bundles.yml in given root folders
+     *
+     * @param array $roots
+     *
+     * @return array
      */
-    protected function findBundles(array $roots = []): array
+    protected function findBundles($roots = [])
     {
         $paths = [];
         foreach ($roots as $plugin => $pluginRoots) {
@@ -142,7 +197,13 @@ class Kernel
         return $paths;
     }
 
-    protected function getBundlesMapping(array $bundles, string $plugin): array
+    /**
+     * @param array $bundles
+     * @param string $plugin
+     *
+     * @return array
+     */
+    protected function getBundlesMapping(array $bundles, $plugin)
     {
         $result = [];
         foreach ($bundles as $bundle) {
@@ -165,12 +226,18 @@ class Kernel
         return $result;
     }
 
-    public function getBundles(): array
+    /**
+     * @return array
+     */
+    public function getBundles()
     {
         return $this->bundles;
     }
 
-    public function getBundle($name): BundleInterface
+    /**
+     * @inheritDoc
+     */
+    public function getBundle($name)
     {
         if (!isset($this->bundles[$name])) {
             throw new \InvalidArgumentException(
@@ -188,13 +255,18 @@ class Kernel
 
     /**
      * Gets a new ContainerBuilder instance used to build the service container.
+     *
+     * @return ContainerBuilder
      */
-    protected function getContainerBuilder(): ContainerBuilder
+    protected function getContainerBuilder()
     {
         return new ContainerBuilder();
     }
 
-    protected function buildContainer(): ContainerBuilder
+    /**
+     * @return ContainerBuilder
+     */
+    protected function buildContainer()
     {
         $container = $this->getContainerBuilder();
 
@@ -220,8 +292,10 @@ class Kernel
      * Gets the container's base class.
      *
      * All names except Container must be fully qualified.
+     *
+     * @return string
      */
-    protected function getContainerBaseClass(): string
+    protected function getContainerBaseClass()
     {
         return 'Container';
     }
@@ -232,7 +306,7 @@ class Kernel
      * The cached version of the service container is used when fresh, otherwise the
      * container is built.
      */
-    protected function initializeContainer(): void
+    protected function initializeContainer()
     {
         $cacheValidForPluginsVersions = false;
         $prefix = strtolower(preg_replace('/(?<!^)[A-Z]/', '-$0', explode('\\', get_class($this)))[0]);
@@ -285,9 +359,17 @@ class Kernel
             ) {
                 self::$freshCache[$cachePath] = true;
                 $this->container->set('kernel', $this);
-                error_reporting($errorLevel);
 
-                return;
+                // SYMFONY SELF-HEALING: Validate container consistency to detect namespace mismatches
+                if (!$this->validateContainerConsistency($cacheDir, $fs)) {
+                    // Container namespace mismatch detected - force regeneration
+                    $this->container = null;
+                    \error_reporting($errorLevel);
+                    // Continue to regeneration logic below
+                } else {
+                    \error_reporting($errorLevel);
+                    return;
+                }
             }
         } catch (\Throwable $e) {
         }
@@ -396,7 +478,58 @@ class Kernel
         }
     }
 
-    protected function dumpContainer(ConfigCache $cache, ContainerBuilder $container, $class, $baseClass): void
+    /**
+     * Validates container consistency to detect namespace mismatches.
+     * This implements Symfony's self-healing container pattern.
+     */
+    protected function validateContainerConsistency(string $cacheDir, Filesystem $fs): bool
+    {
+        if (!$this->container) {
+            return false;
+        }
+
+        try {
+            // Test container integrity by attempting to load a known service
+            // Use event_dispatcher as it's consistently available in Symfony containers
+            $this->container->get('event_dispatcher');
+            return true;
+
+        } catch (\Throwable $e) {
+            $errorMessage = $e->getMessage();
+
+            // Detect namespace mismatch errors
+            if (\strpos($errorMessage, 'Failed opening required') !== false ||
+                \strpos($errorMessage, 'include_path') !== false ||
+                \strpos($errorMessage, 'Container') !== false) {
+
+                // Log the namespace mismatch for debugging
+                \error_log(\sprintf(
+                    'Builderius Container Namespace Mismatch Detected: %s. Triggering container regeneration.',
+                    $errorMessage
+                ));
+
+                // Force container regeneration by removing cache directory
+                try {
+                    if (\is_dir($cacheDir)) {
+                        $fs->remove($cacheDir);
+                    }
+                } catch (\Throwable $cleanupException) {
+                    // If cleanup fails, log but continue - the regeneration will still work
+                    \error_log('Builderius Container Cache Cleanup Warning: ' . $cleanupException->getMessage());
+                }
+
+                return false;
+            }
+
+            // Re-throw other types of exceptions as they indicate different issues
+            throw $e;
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function dumpContainer(ConfigCache $cache, ContainerBuilder $container, $class, $baseClass)
     {
         // cache the container
         $dumper = new PhpDumper($container);
@@ -441,7 +574,10 @@ class Kernel
         }
     }
 
-    public function getContainer(): ContainerInterface
+    /**
+     * @return ContainerInterface
+     */
+    public function getContainer()
     {
         return $this->container;
     }
@@ -449,7 +585,7 @@ class Kernel
     /**
      * Boots the current kernel.
      */
-    public function boot(): void
+    public function boot()
     {
         if (true === $this->booted) {
             return;

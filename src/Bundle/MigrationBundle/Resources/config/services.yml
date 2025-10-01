@@ -39,4 +39,4 @@ services:
       - [setExecutor, ['@swoop_migration.executor.migrations']]
       - [addCondition, ['@latest_migrations_are_not_loaded']]
     tags:
-      - { name: swoop_hook }
+      - { name: wp_hook }
