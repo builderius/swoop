@@ -2,7 +2,6 @@
 
 namespace Swoop\Bundle\KernelBundle\ParameterBag;
 
-#[\AllowDynamicProperties]
 class ParameterBag implements \IteratorAggregate, \Countable
 {
     /**

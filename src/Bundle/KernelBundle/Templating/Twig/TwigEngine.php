@@ -2,19 +2,22 @@
 
 namespace Swoop\Bundle\KernelBundle\Templating\Twig;
 
-use Swoop\Bundle\KernelBundle\Templating\TemplateNameParser;
+use Symfony\Component\Templating\EngineInterface;
+use Symfony\Component\Templating\StreamingEngineInterface;
+use Symfony\Component\Templating\TemplateNameParserInterface;
+use Symfony\Component\Templating\TemplateReferenceInterface;
 use Twig\Environment;
 use Twig\Error\Error;
 use Twig\Error\LoaderError;
 use Twig\Loader\FilesystemLoader;
 use Twig\Template;
 
-class TwigEngine
+class TwigEngine implements EngineInterface, StreamingEngineInterface
 {
     protected $environment;
     protected $parser;
 
-    public function __construct(Environment $environment, TemplateNameParser $parser)
+    public function __construct(Environment $environment, TemplateNameParserInterface $parser)
     {
         $this->environment = $environment;
         $this->parser = $parser;
@@ -25,8 +28,7 @@ class TwigEngine
      */
     public function render($name, array $parameters = array())
     {
-        $parsedTemplate = $this->parser->parse($name);
-        $absoluteName = $parsedTemplate['logicalName'];
+        $absoluteName = $this->parser->parse($name)->getLogicalName();
         $filename = \substr(\strrchr($absoluteName, "/"), 1);
         /** @var FilesystemLoader $loader */
         $loader = $this->environment->getLoader();
@@ -87,13 +89,14 @@ class TwigEngine
 
         $template = $this->parser->parse($name);
 
-        return 'twig' === $template['engine'];
+        return 'twig' === $template->get('engine');
     }
 
     /**
      * Loads the given template.
      *
-     * @param string|Template $name A template name or Template instance
+     * @param string|TemplateReferenceInterface|Template $name A template name or an instance of
+     *                                                         TemplateReferenceInterface or Template
      *
      * @return Template
      *

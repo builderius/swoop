@@ -4,6 +4,17 @@ services:
         arguments:
             - '@service_container'
 
+    templating.php.loader:
+        class: 'Symfony\Component\Templating\Loader\FilesystemLoader'
+        arguments:
+            - []
+
+    templating.php.engine:
+        class: 'Symfony\Component\Templating\PhpEngine'
+        arguments:
+            - '@templating.name_parser'
+            - '@templating.php.loader'
+
     twig.loader.filesystem:
         class: 'Twig\Loader\FilesystemLoader'
 
@@ -17,6 +28,12 @@ services:
         arguments:
             - '@twig'
             - '@templating.name_parser'
+
+    templating:
+        class: 'Symfony\Component\Templating\DelegatingEngine'
+        public: true
+        arguments:
+            - ['@templating.php.engine', '@templating.twig.engine']
 
     swoop_kernel.boot_service.composite:
         class: 'Swoop\Bundle\KernelBundle\Boot\CompositeBootService'
